@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Wedding Invitation</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: black;
+    }
+
+    .video-container {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 🔥 BLURRED BACKGROUND VIDEO */
+    .bg-video {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(20px) brightness(0.5);
+      transform: scale(1.2);
+    }
+
+    /* ✅ MAIN CLEAR VIDEO (FULLY VISIBLE) */
+    .main-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      z-index: 2;
+    }
+
+    body.fade-out {
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="video-container">
+
+    <!-- 🔥 Background Fill -->
+    <video class="bg-video" autoplay muted playsinline loop>
+      <source src="Video Project 1.mp4" type="video/mp4">
+    </video>
+
+    <!-- ✅ Main Video -->
+    <video id="introVideo" class="main-video" autoplay muted playsinline>
+      <source src="Video Project 1.mp4" type="video/mp4">
+    </video>
+
+  </div>
+
+  <script>
+    const video = document.getElementById("introVideo");
+
+    video.play().catch(() => {});
+
+    video.addEventListener("ended", () => {
+      document.body.classList.add("fade-out");
+
+      setTimeout(() => {
+        window.location.href = "about.html";
+      }, 1000);
+    });
+
+    document.addEventListener("click", () => {
+      video.play();
+    }, { once: true });
+  </script>
+
+</body>
+</html>
