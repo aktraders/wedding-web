@@ -152,19 +152,62 @@
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    background: #000;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    /* 🖥 Desktop background image */
+    background: url('ChatGPT Image Apr 25, 2026, 06_43_47 PM') center/cover no-repeat;
 }
 
-/* 🎬 VIDEO (default hidden for desktop) */
+/* 🎬 Video hidden by default */
 .hero-video {
-    display: none; /* ❌ hide by default */
+    display: none;
 }
 
-/* 📱 MOBILE ONLY → show video */
+/* 💖 Text (visible by default = desktop) */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+}
+
+/* ✨ Text styling */
+.hero-title {
+    font-size: 3rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    animation: fadeUp 1.5s ease forwards;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    animation: fadeUp 2s ease forwards;
+}
+
+/* 🌟 Animation */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 📱 MOBILE ONLY */
 @media (max-width: 767px) {
+
+    .hero {
+        background: none; /* ❌ remove image */
+    }
+
+    /* 🎬 Show video */
     .hero-video {
         display: block;
         position: absolute;
@@ -176,53 +219,21 @@
         transform: translate(-50%, -50%);
         z-index: 1;
     }
-}
 
-/* 🖥 DESKTOP → show animated text */
-.hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    color: #fff;
-}
-
-/* ✨ Beautiful text animation */
-.hero-title {
-    font-size: 3rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeUp 1.5s ease forwards;
-}
-
-.hero-subtitle {
-    font-size: 1.5rem;
-    margin-top: 10px;
-    opacity: 0;
-    animation: fadeUp 2s ease forwards;
-}
-
-/* 🌟 Animation */
-@keyframes fadeUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    /* ❌ Hide text completely */
+    .hero-content {
+        display: none;
     }
 }
 
-/* 🌙 Optional gradient */
+/* 🌙 Optional overlay */
 .hero::after {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 25%;
-    background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+    inset: 0;
+    background: rgba(0,0,0,0.3);
     z-index: 1;
 }
-
         /* Gold-Themed Cyber Cards for Events - Updated with Image Support */
         .events-cyber-grid {
             display: grid;
