@@ -74,7 +74,7 @@
             .navbar a { font-size: 0.65rem; }
         }
 
-        /* Floating Petals - Enhanced Colors */
+        /* Floating Petals */
         .petals-container {
             position: fixed;
             top: 0;
@@ -99,7 +99,7 @@
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* HERO SECTION - FULL VIDEO */
+        /* Hero Section - Full Video */
         .hero {
             position: relative;
             width: 100%;
@@ -123,9 +123,6 @@
                 height: 100%;
                 object-fit: cover;
             }
-        }
-        .hero-content {
-            display: none;
         }
 
         /* Section Styling */
@@ -158,7 +155,7 @@
             .section-title { font-size: 2rem; }
         }
 
-        /* ----- New Cyber/3D Card Grid Styles (From Uiverse) ----- */
+        /* Cyber 3D Cards for Events */
         .events-cyber-grid {
             display: grid;
             gap: 2rem;
@@ -167,17 +164,12 @@
             align-items: center;
         }
         @media (min-width: 640px) { 
-            .events-cyber-grid { 
-                grid-template-columns: repeat(2, 1fr); 
-            } 
+            .events-cyber-grid { grid-template-columns: repeat(2, 1fr); } 
         }
         @media (min-width: 1024px) { 
-            .events-cyber-grid { 
-                grid-template-columns: repeat(4, 1fr); 
-            } 
+            .events-cyber-grid { grid-template-columns: repeat(4, 1fr); } 
         }
 
-        /* Container for each cyber card - adapted to fit our content */
         .cyber-card-container {
             position: relative;
             width: 260px;
@@ -189,7 +181,6 @@
             width: 250px;
             height: 330px;
         }
-        /* Card base */
         .cyber-card {
             position: absolute;
             inset: 0;
@@ -215,13 +206,11 @@
             text-align: center;
             padding: 1rem;
         }
-        /* Custom styling for wedding event info inside the cyber card */
         .event-icon-cyber {
             font-size: 3rem;
             color: #00ffaa;
             margin-bottom: 1rem;
             text-shadow: 0 0 12px rgba(0, 255, 170, 0.6);
-            transition: 0.3s;
         }
         .event-title-cyber {
             font-size: 1.7rem;
@@ -239,26 +228,6 @@
             margin-top: 0.5rem;
             line-height: 1.4;
         }
-        .event-details-cyber i {
-            margin-right: 5px;
-            color: #ffb347;
-        }
-        .glow-hover-trigger {
-            position: absolute;
-            inset: 0;
-            z-index: 200;
-            cursor: pointer;
-        }
-        /* Override some styles from the original cyber snippet to blend */
-        .cyber-card #prompt {
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-            letter-spacing: 2px;
-            position: absolute;
-            color: rgba(255, 255, 255, 0.5);
-        }
         .tracker-grid {
             perspective: 800px;
             inset: 0;
@@ -274,15 +243,164 @@
             width: 100%;
             height: 100%;
         }
-        /* 3D rotation dynamic rules via hover (each cell) */
-        .tracker-cell:hover ~ .cyber-card {
-            transition: 125ms ease-in-out;
+        .cyber-card .glare-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(125deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 55%, rgba(255,255,255,0) 100%);
+            opacity: 0;
+            transition: opacity 300ms;
+            pointer-events: none;
         }
-        /* We'll generate classes via JS for rotation, but simpler: we reuse original approach but map each cell */
-        /* Let's add rotation mapping classes via style injection */
-        /* Since dynamic, I'll create a systematic rule for each cell row/col combination using data attributes? Simpler: I'll add a limited set using nth-child. To keep performance, we add generic style via CSS classes for each cell index */
-        /* For brevity, we will cover hover rotations for all 25 possible positions via generated styles */
-        
+        .cyber-card:hover .glare-overlay { opacity: 1; }
+        .cyber-card .scan-line-anim {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent, rgba(92,103,255,0.15), transparent);
+            transform: translateY(-100%);
+            animation: scanMove 2s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes scanMove {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .corner-borders span {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 2px solid rgba(0, 255, 170, 0.3);
+            transition: all 0.3s ease;
+        }
+        .corner-borders span:nth-child(1) { top: 10px; left: 10px; border-right:0; border-bottom:0; }
+        .corner-borders span:nth-child(2) { top: 10px; right: 10px; border-left:0; border-bottom:0; }
+        .corner-borders span:nth-child(3) { bottom: 10px; left: 10px; border-right:0; border-top:0; }
+        .corner-borders span:nth-child(4) { bottom: 10px; right: 10px; border-left:0; border-top:0; }
+        .cyber-card:hover .corner-borders span { border-color: rgba(0, 255, 170, 0.9); box-shadow: 0 0 10px rgba(0, 255, 170, 0.5); }
+        .event-particles span {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #00ffaa;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        .cyber-card:hover .event-particles span {
+            animation: particleFloat 1.5s infinite;
+        }
+        @keyframes particleFloat {
+            0% { transform: translate(0,0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translate(calc(var(--x,0)*30px), calc(var(--y,0)*30px)); opacity: 0; }
+        }
+        .event-particles span:nth-child(1) { --x:1; --y:-1; top:30%; left:20%; }
+        .event-particles span:nth-child(2) { --x:-1; --y:-1; top:60%; right:20%; }
+        .event-particles span:nth-child(3) { --x:0.5; --y:1; top:20%; left:50%; }
+        .event-particles span:nth-child(4) { --x:-0.5; --y:1; top:75%; right:30%; }
+        .event-particles span:nth-child(5) { --x:1; --y:0.5; top:45%; left:70%; }
+        .event-particles span:nth-child(6) { --x:-1; --y:0.5; top:80%; right:60%; }
+
+        /* ========== NEW GALLERY CARD STYLES (Rotating Border) ========== */
+        .gallery-grid {
+            display: grid;
+            gap: 1.8rem;
+            grid-template-columns: repeat(2, 1fr);
+            justify-items: center;
+            align-items: center;
+        }
+        @media (min-width: 640px) {
+            .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        /* Animated Border Card - from Uiverse by bhaveshxrawat */
+        .animated-card {
+            width: 100%;
+            max-width: 260px;
+            aspect-ratio: 1 / 1;
+            background: #07182E;
+            position: relative;
+            display: flex;
+            place-content: center;
+            place-items: center;
+            overflow: hidden;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .animated-card:hover {
+            transform: scale(1.03);
+        }
+        .animated-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            border-radius: 16px;
+            transition: transform 0.5s ease;
+        }
+        .animated-card:hover img {
+            transform: scale(1.05);
+        }
+        /* Glowing rotating border */
+        .animated-card::before {
+            content: '';
+            position: absolute;
+            width: 100px;
+            background: linear-gradient(180deg, rgb(0, 183, 255), rgb(255, 48, 255));
+            height: 150%;
+            animation: rotBGimg 3s linear infinite;
+            transition: all 0.2s linear;
+            z-index: 1;
+        }
+        @keyframes rotBGimg {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        /* Inner dark overlay to frame image better */
+        .animated-card::after {
+            content: '';
+            position: absolute;
+            background: #07182E;
+            inset: 5px;
+            border-radius: 16px;
+            z-index: 2;
+        }
+        /* Image sits above the after pseudo-element */
+        .animated-card img {
+            z-index: 3;
+            position: relative;
+        }
+        /* Optional subtle overlay text on hover */
+        .card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: #FFD966;
+            text-align: center;
+            padding: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 0 0 16px 16px;
+            pointer-events: none;
+        }
+        .animated-card:hover .card-overlay {
+            opacity: 1;
+        }
+        /* For mobile fine-tune */
+        @media (max-width: 640px) {
+            .animated-card::before { width: 70px; }
+        }
+
         /* Venue */
         .venue-container {
             display: flex;
@@ -423,63 +541,6 @@
         }
         .lightbox.active { display: flex; }
         .lightbox img { max-width: 90%; max-height: 80%; border-radius: 24px; border: 3px solid #FFB347; }
-
-        /* Cyber extras: scan line, glare, particles simplified */
-        .cyber-card .glare-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(125deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 55%, rgba(255,255,255,0) 100%);
-            opacity: 0;
-            transition: opacity 300ms;
-            pointer-events: none;
-        }
-        .cyber-card:hover .glare-overlay { opacity: 1; }
-        .cyber-card .scan-line-anim {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, transparent, rgba(92,103,255,0.15), transparent);
-            transform: translateY(-100%);
-            animation: scanMove 2s linear infinite;
-            pointer-events: none;
-        }
-        @keyframes scanMove {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-        .corner-borders span {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            border: 2px solid rgba(0, 255, 170, 0.3);
-            transition: all 0.3s ease;
-        }
-        .corner-borders span:nth-child(1) { top: 10px; left: 10px; border-right:0; border-bottom:0; }
-        .corner-borders span:nth-child(2) { top: 10px; right: 10px; border-left:0; border-bottom:0; }
-        .corner-borders span:nth-child(3) { bottom: 10px; left: 10px; border-right:0; border-top:0; }
-        .corner-borders span:nth-child(4) { bottom: 10px; right: 10px; border-left:0; border-top:0; }
-        .cyber-card:hover .corner-borders span { border-color: rgba(0, 255, 170, 0.9); box-shadow: 0 0 10px rgba(0, 255, 170, 0.5); }
-        .event-particles span {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: #00ffaa;
-            border-radius: 50%;
-            opacity: 0;
-        }
-        .cyber-card:hover .event-particles span {
-            animation: particleFloat 1.5s infinite;
-        }
-        @keyframes particleFloat {
-            0% { transform: translate(0,0); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translate(calc(var(--x,0)*30px), calc(var(--y,0)*30px)); opacity: 0; }
-        }
-        .event-particles span:nth-child(1) { --x:1; --y:-1; top:30%; left:20%; }
-        .event-particles span:nth-child(2) { --x:-1; --y:-1; top:60%; right:20%; }
-        .event-particles span:nth-child(3) { --x:0.5; --y:1; top:20%; left:50%; }
-        .event-particles span:nth-child(4) { --x:-0.5; --y:1; top:75%; right:30%; }
-        .event-particles span:nth-child(5) { --x:1; --y:0.5; top:45%; left:70%; }
-        .event-particles span:nth-child(6) { --x:-1; --y:0.5; top:80%; right:60%; }
     </style>
 </head>
 <body>
@@ -497,7 +558,7 @@
         <a href="#contact">Contact</a>
     </div>
 
-    <!-- Hero Section - Video Only -->
+    <!-- Hero Section -->
     <section id="home" class="hero">
         <video autoplay muted loop playsinline disablePictureInPicture class="hero-video">
             <source src="Video Project-rv (1) (1).mp4" type="video/mp4">
@@ -506,28 +567,16 @@
         </video>
     </section>
 
-    <!-- Events Section with Cyber 3D Cards -->
+    <!-- Events Section with Cyber Cards -->
     <section id="events" data-aos="fade-up">
         <div class="section-title">The Celebrations</div>
-        <div class="events-cyber-grid" id="cyberEventsGrid">
-            <!-- Each card will be dynamically injected but we can build static for 4 events -->
-        </div>
+        <div class="events-cyber-grid" id="cyberEventsGrid"></div>
     </section>
 
-    <!-- Gallery Section -->
+    <!-- Gallery Section - NEW Rotating Border Cards -->
     <section id="gallery" data-aos="fade-up">
         <div class="section-title">Magical Moments</div>
-        <div class="gallery-grid" style="display:grid; gap:1.2rem; grid-template-columns:repeat(2,1fr);">
-            <!-- Gallery items same as original but adjusted for brevity -->
-            <div class="gallery-item"><img loading="lazy" src="https://sanatanajourney.com/wp-content/uploads/2025/01/Sharad-Purnima-6.png" alt="Wedding"></div>
-            <div class="gallery-item"><img loading="lazy" src="https://plus.unsplash.com/premium_photo-1682092637891-d9979cc93f6e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aGluZHUlMjB3ZWRkaW5nfGVufDB8fDB8fHww" alt="Mehendi"></div>
-            <div class="gallery-item"><img loading="lazy" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMlBf1hvkCWrCYNho7mKTdT-xrXz16hEJqYYtOCds0LgcsvX0tqxsT0vQ&s" alt="Couple"></div>
-            <div class="gallery-item"><img loading="lazy" src="https://media.licdn.com/dms/image/v2/D5612AQHID77btj_3zA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1688018507126?e=2147483647&v=beta&t=_ZVaFR-12A7t8n0aheRwd9Q4If-mWmDyeaqs0QAPUuE" alt="Decor"></div>
-            <div class="gallery-item"><img loading="lazy" src="https://c.ndtvimg.com/2026-02/ik8tspa_vijay-rashmika-wedding-jewellery_625x300_27_February_26.jpg?im=FeatureCrop,algorithm=dnn,width=1200,height=738" alt="Rituals"></div>
-            <div class="gallery-item"><img loading="lazy" src="https://media.indulgexpress.com/indulgexpress%2F2026-02-26%2Fitv9c1z9%2FMixCollage-26-Feb-2026-08-07-PM-9812.jpg?w=480&auto=format%2Ccompress" alt="Bridal"></div>
-            <div class="gallery-item"><img loading="lazy" src="https://viewsbangladesh.com/_next/image/?url=https%3A%2F%2Fimagedelivery.net%2FHRs_9pnDDn9uipVGixpHsg%2F482b63f5-acb9-47e0-6326-58101490d700%2Fpublic&w=1920&q=75" alt="Mandap"></div>
-            <div class="gallery-item"><img loading="lazy" src="https://img.mathrubhumi.com/view/acePublic/alias/contentid/1pghml7mv7hqicltv64/1/rashmika-mandanna-vijay-deverakonda-jpg.webp?f=3%3A2&q=0.75&w=900" alt="Celebration"></div>
-        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
     </section>
 
     <!-- Venue -->
@@ -577,7 +626,7 @@
     <script>
         AOS.init({ duration: 800, once: false, mirror: true, offset: 80 });
 
-        // Petals
+        // Floating Petals
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         const petalCount = isMobile ? 15 : 40;
         const container = document.getElementById('petalsContainer');
@@ -594,7 +643,7 @@
             container.appendChild(petal);
         }
 
-        // Sparkle Cursor
+        // Sparkle Cursor (Desktop)
         if (!isMobile) {
             let sparkle = document.createElement('div');
             sparkle.classList.add('sparkle-cursor');
@@ -606,13 +655,17 @@
             });
         }
 
-        // Countdown timer
+        // Countdown Timer (Wedding: April 26, 2026, 7:00 PM)
         function startCountdown() {
             const targetDate = new Date(2026, 3, 26, 19, 0, 0);
             function updateTimer() {
                 const now = new Date();
                 const diff = targetDate - now;
-                if(diff <= 0) { document.getElementById('days').textContent='00'; document.getElementById('hours').textContent='00'; document.getElementById('minutes').textContent='00'; document.getElementById('seconds').textContent='00'; return; }
+                if(diff <= 0) {
+                    document.getElementById('days').textContent='00'; document.getElementById('hours').textContent='00';
+                    document.getElementById('minutes').textContent='00'; document.getElementById('seconds').textContent='00';
+                    return;
+                }
                 const days = Math.floor(diff/(1000*60*60*24));
                 const hours = Math.floor((diff % (86400000))/(3600000));
                 const mins = Math.floor((diff % 3600000)/60000);
@@ -627,7 +680,7 @@
         }
         startCountdown();
 
-        // Build cyber cards for events
+        // Build Cyber Cards for Events
         const eventsData = [
             { icon: "fas fa-gem", name: "Engagement", details: "📍 Lotus Hall, Jaipur<br>📅 20th April 2025 · 7 PM" },
             { icon: "fas fa-leaf", name: "Haldi", details: "📍 Royal Courtyard<br>📅 24th April 2025 · 9 AM" },
@@ -640,16 +693,14 @@
             const containerDiv = document.createElement('div');
             containerDiv.className = 'cyber-card-container';
             containerDiv.setAttribute('data-aos', 'zoom-in');
-            // tracker grid
             const trackerGrid = document.createElement('div');
             trackerGrid.className = 'tracker-grid';
             for(let i=0; i<25; i++){
                 const cell = document.createElement('div');
                 cell.className = 'tracker-cell';
-                // define rotation rules based on cell index (row, col)
                 const row = Math.floor(i/5);
                 const col = i%5;
-                const xRot = (2 - row) * 8; // from -16 to 16 deg
+                const xRot = (2 - row) * 8;
                 const yRot = (col - 2) * 5;
                 cell.addEventListener('mouseenter', () => {
                     const card = containerDiv.querySelector('.cyber-card');
@@ -680,19 +731,52 @@
             grid.appendChild(containerDiv);
         });
 
-        // Lightbox
-        const galleryItems = document.querySelectorAll('.gallery-item');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightboxImg');
-        galleryItems.forEach(item => {
-            item.addEventListener('click', () => {
-                lightboxImg.src = item.querySelector('img').src;
+        // --- GALLERY with New Animated Border Cards (Uiverse style) ---
+        const galleryImages = [
+            "https://sanatanajourney.com/wp-content/uploads/2025/01/Sharad-Purnima-6.png",
+            "https://plus.unsplash.com/premium_photo-1682092637891-d9979cc93f6e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aGluZHUlMjB3ZWRkaW5nfGVufDB8fDB8fHww",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMlBf1hvkCWrCYNho7mKTdT-xrXz16hEJqYYtOCds0LgcsvX0tqxsT0vQ&s",
+            "https://media.licdn.com/dms/image/v2/D5612AQHID77btj_3zA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1688018507126?e=2147483647&v=beta&t=_ZVaFR-12A7t8n0aheRwd9Q4If-mWmDyeaqs0QAPUuE",
+            "https://c.ndtvimg.com/2026-02/ik8tspa_vijay-rashmika-wedding-jewellery_625x300_27_February_26.jpg?im=FeatureCrop,algorithm=dnn,width=1200,height=738",
+            "https://media.indulgexpress.com/indulgexpress%2F2026-02-26%2Fitv9c1z9%2FMixCollage-26-Feb-2026-08-07-PM-9812.jpg?w=480&auto=format%2Ccompress",
+            "https://viewsbangladesh.com/_next/image/?url=https%3A%2F%2Fimagedelivery.net%2FHRs_9pnDDn9uipVGixpHsg%2F482b63f5-acb9-47e0-6326-58101490d700%2Fpublic&w=1920&q=75",
+            "https://img.mathrubhumi.com/view/acePublic/alias/contentid/1pghml7mv7hqicltv64/1/rashmika-mandanna-vijay-deverakonda-jpg.webp?f=3%3A2&q=0.75&w=900"
+        ];
+        const galleryDescriptions = [
+            "Sacred Ceremony", "Mehendi Magic", "Eternal Vows", "Royal Decor",
+            "Mangal Phere", "Bridal Grace", "Divine Mandap", "Grand Celebration"
+        ];
+        const galleryGridContainer = document.getElementById('galleryGrid');
+        galleryGridContainer.innerHTML = '';
+        galleryImages.forEach((src, idx) => {
+            const card = document.createElement('div');
+            card.className = 'animated-card';
+            card.setAttribute('data-aos', 'fade-up');
+            card.setAttribute('data-aos-delay', (idx * 50).toString());
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = galleryDescriptions[idx] || "Wedding Moment";
+            img.loading = "lazy";
+            const overlay = document.createElement('div');
+            overlay.className = 'card-overlay';
+            overlay.textContent = galleryDescriptions[idx] + " ✨";
+            card.appendChild(img);
+            card.appendChild(overlay);
+            // Lightbox click
+            card.addEventListener('click', (e) => {
+                e.stopPropagation();
+                lightboxImg.src = src;
                 lightbox.classList.add('active');
             });
+            galleryGridContainer.appendChild(card);
         });
+
+        // Lightbox Setup
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
         lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
 
-        // smooth scroll
+        // Smooth Scroll Navbar
         document.querySelectorAll('.navbar a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -705,14 +789,25 @@
         const scrollTopBtn = document.getElementById('scrollTop');
         scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         
+        // Background Music
         let audioCtx = null, isMusicPlaying = false;
         const musicBtn = document.getElementById('musicToggle');
         musicBtn.addEventListener('click', () => {
-            if(!audioCtx) { audioCtx = new Audio('01 - Kalyanam Vybhogam - SenSongsMp3.Co.mp3'); audioCtx.loop = true; audioCtx.volume = 0.2; }
-            if(isMusicPlaying) { audioCtx.pause(); musicBtn.innerHTML = '<i class="fas fa-music"></i>'; }
-            else { audioCtx.play().catch(e=>console.log); musicBtn.innerHTML = '<i class="fas fa-pause"></i>'; }
+            if(!audioCtx) { 
+                audioCtx = new Audio('01 - Kalyanam Vybhogam - SenSongsMp3.Co.mp3'); 
+                audioCtx.loop = true; 
+                audioCtx.volume = 0.2; 
+            }
+            if(isMusicPlaying) { 
+                audioCtx.pause(); 
+                musicBtn.innerHTML = '<i class="fas fa-music"></i>'; 
+            } else { 
+                audioCtx.play().catch(e=>console.log("autoplay blocked")); 
+                musicBtn.innerHTML = '<i class="fas fa-pause"></i>'; 
+            }
             isMusicPlaying = !isMusicPlaying;
         });
+        
         const heroVideo = document.querySelector('.hero-video');
         if(heroVideo && heroVideo.paused) heroVideo.play().catch(e=>{});
     </script>
