@@ -124,7 +124,6 @@
                 object-fit: cover;
             }
         }
-        /* No overlay - video only */
         .hero-content {
             display: none;
         }
@@ -159,111 +158,131 @@
             .section-title { font-size: 2rem; }
         }
 
-        /* Premium Animated Events Cards - ELECTRIC VERSION */
-        .events-grid {
+        /* ----- New Cyber/3D Card Grid Styles (From Uiverse) ----- */
+        .events-cyber-grid {
             display: grid;
-            gap: 1.8rem;
+            gap: 2rem;
             grid-template-columns: 1fr;
+            justify-items: center;
+            align-items: center;
         }
-        @media (min-width: 640px) { .events-grid { grid-template-columns: repeat(2,1fr); } }
-        @media (min-width: 1024px) { .events-grid { grid-template-columns: repeat(4,1fr); } }
+        @media (min-width: 640px) { 
+            .events-cyber-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+            } 
+        }
+        @media (min-width: 1024px) { 
+            .events-cyber-grid { 
+                grid-template-columns: repeat(4, 1fr); 
+            } 
+        }
 
-        /* 🔥 ELECTRIC CARD */
-        .event-card {
+        /* Container for each cyber card - adapted to fit our content */
+        .cyber-card-container {
             position: relative;
-            border-radius: 32px;
-            padding: 2rem 1.2rem;
-            text-align: center;
-            overflow: hidden;
-            background: linear-gradient(145deg, rgba(88, 28, 48, 0.85), rgba(40, 15, 25, 0.95));
-            backdrop-filter: blur(12px);
-            transition: all 0.4s cubic-bezier(0.2,0.9,0.4,1.2);
-            box-shadow: 0 20px 35px rgba(0,0,0,0.4);
+            width: 260px;
+            height: 340px;
+            transition: 200ms;
+            margin: 0 auto;
         }
-
-        /* ⚡ ELECTRIC BORDER */
-        .event-card::before {
-            content: "";
+        .cyber-card-container:active {
+            width: 250px;
+            height: 330px;
+        }
+        /* Card base */
+        .cyber-card {
             position: absolute;
-            inset: -2px;
-            border-radius: 32px;
-            background: linear-gradient(60deg, #ffb347, #ff00cc, #00f0ff, #ff9933, #ffb347);
-            background-size: 300%;
-            animation: electricBorder 6s linear infinite;
-            filter: blur(10px);
-            z-index: -1;
-        }
-
-        /* 🔥 INNER CARD LAYER */
-        .event-card::after {
-            content: "";
-            position: absolute;
-            inset: 2px;
-            background: linear-gradient(145deg, rgba(88, 28, 48, 0.9), rgba(30, 10, 20, 0.95));
-            border-radius: 30px;
-            z-index: -1;
-        }
-
-        @keyframes electricBorder {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .event-card:hover {
-            transform: translateY(-12px) scale(1.03);
-            box-shadow: 0 30px 60px rgba(255, 150, 50, 0.4);
-        }
-
-        .event-card i {
-            font-size: 3rem;
-            color: #FFB347;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 10px #ff9933, 0 0 20px #ff6600;
-            animation: iconPulse 2s infinite alternate;
-        }
-
-        @keyframes iconPulse {
-            from { transform: scale(1); text-shadow: 0 0 10px #ff9933; }
-            to { transform: scale(1.1); text-shadow: 0 0 20px #ff6600, 0 0 40px #ff3300; }
-        }
-
-        .event-card h3 {
-            font-size: 1.7rem;
-            font-family: 'Playfair Display', serif;
-            margin: 0.8rem 0;
-            color: #FFE0A3;
-        }
-        .event-card p {
-            font-size: 0.9rem;
-            color: #ffd9b5;
-        }
-
-        /* Gallery */
-        .gallery-grid {
-            display: grid;
-            gap: 1.2rem;
-            grid-template-columns: repeat(2,1fr);
-        }
-        @media (min-width: 640px) { .gallery-grid { grid-template-columns: repeat(3,1fr); } }
-        @media (min-width: 1024px) { .gallery-grid { grid-template-columns: repeat(4,1fr); } }
-        .gallery-item {
+            inset: 0;
+            z-index: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            transition: 700ms;
+            background: linear-gradient(45deg, #1a1a1a, #262626);
+            border: 2px solid rgba(255, 255, 255, 0.1);
             overflow: hidden;
-            border-radius: 28px;
-            cursor: pointer;
-            aspect-ratio: 1 / 1;
-            background: #2c1a1f;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.2);
         }
-        .gallery-item img {
+        .card-content-cyber {
+            position: relative;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
         }
-        .gallery-item:hover img { transform: scale(1.1); }
-
+        /* Custom styling for wedding event info inside the cyber card */
+        .event-icon-cyber {
+            font-size: 3rem;
+            color: #00ffaa;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 12px rgba(0, 255, 170, 0.6);
+            transition: 0.3s;
+        }
+        .event-title-cyber {
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #00ffaa, #00a2ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0.5rem 0;
+        }
+        .event-details-cyber {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+        .event-details-cyber i {
+            margin-right: 5px;
+            color: #ffb347;
+        }
+        .glow-hover-trigger {
+            position: absolute;
+            inset: 0;
+            z-index: 200;
+            cursor: pointer;
+        }
+        /* Override some styles from the original cyber snippet to blend */
+        .cyber-card #prompt {
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            letter-spacing: 2px;
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        .tracker-grid {
+            perspective: 800px;
+            inset: 0;
+            z-index: 200;
+            position: absolute;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            width: 100%;
+            height: 100%;
+        }
+        .tracker-cell {
+            width: 100%;
+            height: 100%;
+        }
+        /* 3D rotation dynamic rules via hover (each cell) */
+        .tracker-cell:hover ~ .cyber-card {
+            transition: 125ms ease-in-out;
+        }
+        /* We'll generate classes via JS for rotation, but simpler: we reuse original approach but map each cell */
+        /* Let's add rotation mapping classes via style injection */
+        /* Since dynamic, I'll create a systematic rule for each cell row/col combination using data attributes? Simpler: I'll add a limited set using nth-child. To keep performance, we add generic style via CSS classes for each cell index */
+        /* For brevity, we will cover hover rotations for all 25 possible positions via generated styles */
+        
         /* Venue */
         .venue-container {
             display: flex;
@@ -288,7 +307,7 @@
             border: 1px solid rgba(255, 180, 70, 0.5);
         }
 
-        /* Countdown - Fixed */
+        /* Countdown */
         .countdown {
             display: flex;
             justify-content: center;
@@ -340,9 +359,6 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             border: 1px solid rgba(255,200,100,0.5);
         }
-        .contact-btn i {
-            font-size: 1.3rem;
-        }
         .contact-btn.whatsapp {
             background: linear-gradient(135deg, #075E54, #128C7E);
         }
@@ -350,11 +366,6 @@
             transform: scale(1.05);
             filter: brightness(1.1);
         }
-        @media (max-width: 768px) {
-            .contact-btn { padding: 0.7rem 1.5rem; font-size: 0.9rem; gap: 8px; }
-        }
-
-        /* Footer */
         footer {
             background: linear-gradient(145deg, #0a0308, #150a12);
             padding: 2.5rem 1rem;
@@ -370,7 +381,6 @@
         }
         .social-icons a:hover { transform: scale(1.2); text-shadow: 0 0 12px gold; }
 
-        /* Music Toggle & Scroll Top */
         .music-toggle, .scroll-top {
             position: fixed;
             bottom: 20px;
@@ -398,7 +408,6 @@
         }
         .music-toggle:hover, .scroll-top:hover { transform: scale(1.1); background: #FFB347; color: #1a0a0a; }
         
-        /* Lightbox */
         .lightbox {
             position: fixed;
             top: 0;
@@ -414,41 +423,102 @@
         }
         .lightbox.active { display: flex; }
         .lightbox img { max-width: 90%; max-height: 80%; border-radius: 24px; border: 3px solid #FFB347; }
+
+        /* Cyber extras: scan line, glare, particles simplified */
+        .cyber-card .glare-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(125deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 55%, rgba(255,255,255,0) 100%);
+            opacity: 0;
+            transition: opacity 300ms;
+            pointer-events: none;
+        }
+        .cyber-card:hover .glare-overlay { opacity: 1; }
+        .cyber-card .scan-line-anim {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent, rgba(92,103,255,0.15), transparent);
+            transform: translateY(-100%);
+            animation: scanMove 2s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes scanMove {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .corner-borders span {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 2px solid rgba(0, 255, 170, 0.3);
+            transition: all 0.3s ease;
+        }
+        .corner-borders span:nth-child(1) { top: 10px; left: 10px; border-right:0; border-bottom:0; }
+        .corner-borders span:nth-child(2) { top: 10px; right: 10px; border-left:0; border-bottom:0; }
+        .corner-borders span:nth-child(3) { bottom: 10px; left: 10px; border-right:0; border-top:0; }
+        .corner-borders span:nth-child(4) { bottom: 10px; right: 10px; border-left:0; border-top:0; }
+        .cyber-card:hover .corner-borders span { border-color: rgba(0, 255, 170, 0.9); box-shadow: 0 0 10px rgba(0, 255, 170, 0.5); }
+        .event-particles span {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #00ffaa;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        .cyber-card:hover .event-particles span {
+            animation: particleFloat 1.5s infinite;
+        }
+        @keyframes particleFloat {
+            0% { transform: translate(0,0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translate(calc(var(--x,0)*30px), calc(var(--y,0)*30px)); opacity: 0; }
+        }
+        .event-particles span:nth-child(1) { --x:1; --y:-1; top:30%; left:20%; }
+        .event-particles span:nth-child(2) { --x:-1; --y:-1; top:60%; right:20%; }
+        .event-particles span:nth-child(3) { --x:0.5; --y:1; top:20%; left:50%; }
+        .event-particles span:nth-child(4) { --x:-0.5; --y:1; top:75%; right:30%; }
+        .event-particles span:nth-child(5) { --x:1; --y:0.5; top:45%; left:70%; }
+        .event-particles span:nth-child(6) { --x:-1; --y:0.5; top:80%; right:60%; }
     </style>
 </head>
 <body>
-
-   
 
     <div class="petals-container" id="petalsContainer"></div>
     <div class="music-toggle" id="musicToggle"><i class="fas fa-music"></i></div>
     <div class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></div>
 
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="#home">Home</a>
+        <a href="#events">Celebrations</a>
+        <a href="#gallery">Moments</a>
+        <a href="#venue">Venue</a>
+        <a href="#contact">Contact</a>
+    </div>
+
     <!-- Hero Section - Video Only -->
     <section id="home" class="hero">
         <video autoplay muted loop playsinline disablePictureInPicture class="hero-video">
-            <source src="Video Project-rv (1) (1).mp4" type="video/mp4">
             <source src="Video Project-rv (1) (1).mp4" type="video/mp4">
             <source src="https://cdn.pixabay.com/video/2022/10/25/135611-765973354_large.mp4" type="video/mp4">
             <source src="https://assets.mixkit.co/videos/preview/mixkit-traditional-indian-dance-42115-large.mp4" type="video/mp4">
         </video>
     </section>
 
-    <!-- Events Section -->
+    <!-- Events Section with Cyber 3D Cards -->
     <section id="events" data-aos="fade-up">
         <div class="section-title">The Celebrations</div>
-        <div class="events-grid">
-            <div class="event-card" data-aos="zoom-in"><i class="fas fa-gem"></i><h3>Engagement</h3><p>📍 Lotus Hall, Jaipur<br>📅 20th April 2025 · 7 PM</p></div>
-            <div class="event-card" data-aos="zoom-in" data-aos-delay="100"><i class="fas fa-leaf"></i><h3>Haldi</h3><p>📍 Royal Courtyard<br>📅 24th April 2025 · 9 AM</p></div>
-            <div class="event-card" data-aos="zoom-in" data-aos-delay="200"><i class="fas fa-palette"></i><h3>Mehendi</h3><p>📍 Palace Lawns<br>📅 25th April 2025 · 4 PM</p></div>
-            <div class="event-card" data-aos="zoom-in" data-aos-delay="300"><i class="fas fa-fire"></i><h3>Wedding</h3><p>📍 Grand Heritage, Udaipur<br>📅 26th April 2025 · 7 PM</p></div>
+        <div class="events-cyber-grid" id="cyberEventsGrid">
+            <!-- Each card will be dynamically injected but we can build static for 4 events -->
         </div>
     </section>
 
     <!-- Gallery Section -->
-      <section id="gallery" data-aos="fade-up">
+    <section id="gallery" data-aos="fade-up">
         <div class="section-title">Magical Moments</div>
-        <div class="gallery-grid">
+        <div class="gallery-grid" style="display:grid; gap:1.2rem; grid-template-columns:repeat(2,1fr);">
+            <!-- Gallery items same as original but adjusted for brevity -->
             <div class="gallery-item"><img loading="lazy" src="https://sanatanajourney.com/wp-content/uploads/2025/01/Sharad-Purnima-6.png" alt="Wedding"></div>
             <div class="gallery-item"><img loading="lazy" src="https://plus.unsplash.com/premium_photo-1682092637891-d9979cc93f6e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aGluZHUlMjB3ZWRkaW5nfGVufDB8fDB8fHww" alt="Mehendi"></div>
             <div class="gallery-item"><img loading="lazy" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMlBf1hvkCWrCYNho7mKTdT-xrXz16hEJqYYtOCds0LgcsvX0tqxsT0vQ&s" alt="Couple"></div>
@@ -475,7 +545,7 @@
         </div>
     </section>
 
-    <!-- Countdown Timer to April 26, 2025 - FIXED WORKING VERSION -->
+    <!-- Countdown -->
     <section id="countdown" style="background: linear-gradient(135deg, #0f0510, #1f0c18);">
         <div class="section-title" data-aos="zoom-in">Counting to Wedding</div>
         <div class="countdown" id="countdownTimer">
@@ -486,7 +556,6 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" data-aos="fade-up" style="background: #120a10;">
         <div class="section-title">Get in Touch</div>
         <div class="contact-buttons">
@@ -498,11 +567,7 @@
 
     <footer>
         <p>With divine blessings of elders & love of families</p>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-whatsapp"></i></a>
-        </div>
+        <div class="social-icons"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div>
         <p style="margin-top: 1rem;">✨ Welcoming you to a grand celebration ✨</p>
     </footer>
 
@@ -510,10 +575,9 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize AOS
         AOS.init({ duration: 800, once: false, mirror: true, offset: 80 });
 
-        // Floating Petals
+        // Petals
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         const petalCount = isMobile ? 15 : 40;
         const container = document.getElementById('petalsContainer');
@@ -530,7 +594,7 @@
             container.appendChild(petal);
         }
 
-        // Desktop Sparkle Cursor
+        // Sparkle Cursor
         if (!isMobile) {
             let sparkle = document.createElement('div');
             sparkle.classList.add('sparkle-cursor');
@@ -542,131 +606,115 @@
             });
         }
 
-        // ========== WORKING COUNTDOWN TIMER ==========
-        // Set wedding date: April 26, 2025 at 7:00 PM
+        // Countdown timer
         function startCountdown() {
-            // Get the wedding date elements
-            const daysElement = document.getElementById('days');
-            const hoursElement = document.getElementById('hours');
-            const minutesElement = document.getElementById('minutes');
-            const secondsElement = document.getElementById('seconds');
-            
-            // Target date: April 26, 2025, 19:00:00
-            // Using UTC to avoid timezone issues, but setting to local midnight approach
-            // Better: use specific date string that works across timezones
-            const targetDate = new Date(2026, 3, 26, 19, 0, 0);// Month 3 = April
-            
+            const targetDate = new Date(2026, 3, 26, 19, 0, 0);
             function updateTimer() {
                 const now = new Date();
-                const difference = targetDate - now;
-                
-                if (difference <= 0) {
-                    // Wedding has arrived
-                    daysElement.textContent = '00';
-                    hoursElement.textContent = '00';
-                    minutesElement.textContent = '00';
-                    secondsElement.textContent = '00';
-                    return;
-                }
-                
-                // Calculate days, hours, minutes, seconds
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-                
-                // Update display with leading zeros
-                daysElement.textContent = days < 10 ? '0' + days : days;
-                hoursElement.textContent = hours < 10 ? '0' + hours : hours;
-                minutesElement.textContent = minutes < 10 ? '0' + minutes : minutes;
-                secondsElement.textContent = seconds < 10 ? '0' + seconds : seconds;
+                const diff = targetDate - now;
+                if(diff <= 0) { document.getElementById('days').textContent='00'; document.getElementById('hours').textContent='00'; document.getElementById('minutes').textContent='00'; document.getElementById('seconds').textContent='00'; return; }
+                const days = Math.floor(diff/(1000*60*60*24));
+                const hours = Math.floor((diff % (86400000))/(3600000));
+                const mins = Math.floor((diff % 3600000)/60000);
+                const secs = Math.floor((diff % 60000)/1000);
+                document.getElementById('days').textContent = days<10?'0'+days:days;
+                document.getElementById('hours').textContent = hours<10?'0'+hours:hours;
+                document.getElementById('minutes').textContent = mins<10?'0'+mins:mins;
+                document.getElementById('seconds').textContent = secs<10?'0'+secs:secs;
             }
-            
-            // Update immediately
             updateTimer();
-            
-            // Update every second
             setInterval(updateTimer, 1000);
         }
-        
-        // Start the countdown when page loads
         startCountdown();
-        // ========== END OF WORKING COUNTDOWN ==========
 
-        // Lightbox Gallery
+        // Build cyber cards for events
+        const eventsData = [
+            { icon: "fas fa-gem", name: "Engagement", details: "📍 Lotus Hall, Jaipur<br>📅 20th April 2025 · 7 PM" },
+            { icon: "fas fa-leaf", name: "Haldi", details: "📍 Royal Courtyard<br>📅 24th April 2025 · 9 AM" },
+            { icon: "fas fa-palette", name: "Mehendi", details: "📍 Palace Lawns<br>📅 25th April 2025 · 4 PM" },
+            { icon: "fas fa-fire", name: "Wedding", details: "📍 Grand Heritage, Udaipur<br>📅 26th April 2025 · 7 PM" }
+        ];
+        const grid = document.getElementById('cyberEventsGrid');
+        grid.innerHTML = '';
+        eventsData.forEach(ev => {
+            const containerDiv = document.createElement('div');
+            containerDiv.className = 'cyber-card-container';
+            containerDiv.setAttribute('data-aos', 'zoom-in');
+            // tracker grid
+            const trackerGrid = document.createElement('div');
+            trackerGrid.className = 'tracker-grid';
+            for(let i=0; i<25; i++){
+                const cell = document.createElement('div');
+                cell.className = 'tracker-cell';
+                // define rotation rules based on cell index (row, col)
+                const row = Math.floor(i/5);
+                const col = i%5;
+                const xRot = (2 - row) * 8; // from -16 to 16 deg
+                const yRot = (col - 2) * 5;
+                cell.addEventListener('mouseenter', () => {
+                    const card = containerDiv.querySelector('.cyber-card');
+                    if(card) card.style.transform = `rotateX(${xRot}deg) rotateY(${yRot}deg)`;
+                });
+                cell.addEventListener('mouseleave', () => {
+                    const card = containerDiv.querySelector('.cyber-card');
+                    if(card) card.style.transform = '';
+                });
+                trackerGrid.appendChild(cell);
+            }
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'cyber-card';
+            cardDiv.innerHTML = `
+                <div class="card-content-cyber">
+                    <i class="${ev.icon} event-icon-cyber"></i>
+                    <div class="event-title-cyber">${ev.name}</div>
+                    <div class="event-details-cyber">${ev.details}</div>
+                    <div class="event-particles"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                    <div class="corner-borders"><span></span><span></span><span></span><span></span></div>
+                    <div class="glare-overlay"></div>
+                    <div class="scan-line-anim"></div>
+                    <div id="prompt" style="bottom:20px; font-size:10px;">✦ HOVER ✦</div>
+                </div>
+            `;
+            containerDiv.appendChild(trackerGrid);
+            containerDiv.appendChild(cardDiv);
+            grid.appendChild(containerDiv);
+        });
+
+        // Lightbox
         const galleryItems = document.querySelectorAll('.gallery-item');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
         galleryItems.forEach(item => {
             item.addEventListener('click', () => {
-                const imgSrc = item.querySelector('img').src;
-                lightboxImg.src = imgSrc;
+                lightboxImg.src = item.querySelector('img').src;
                 lightbox.classList.add('active');
             });
         });
         lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
 
-        // Navbar smooth scroll
+        // smooth scroll
         document.querySelectorAll('.navbar a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href').substring(1);
                 const target = document.getElementById(targetId);
-                if(target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+                if(target) target.scrollIntoView({ behavior: 'smooth' });
             });
         });
 
-        // Scroll to top button
         const scrollTopBtn = document.getElementById('scrollTop');
-        window.addEventListener('scroll', () => {
-            if(window.scrollY > 400) {
-                scrollTopBtn.style.opacity = '1';
-                scrollTopBtn.style.visibility = 'visible';
-            } else {
-                scrollTopBtn.style.opacity = '0.6';
-                scrollTopBtn.style.visibility = 'visible';
-            }
-        });
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Background Music
-        let audioCtx = null;
-        let isMusicPlaying = false;
+        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        
+        let audioCtx = null, isMusicPlaying = false;
         const musicBtn = document.getElementById('musicToggle');
         musicBtn.addEventListener('click', () => {
-            if(!audioCtx) {
-                audioCtx = new Audio('01 - Kalyanam Vybhogam - SenSongsMp3.Co.mp3');
-                audioCtx.loop = true;
-                audioCtx.volume = 0.2;
-            }
-            if(isMusicPlaying) {
-                audioCtx.pause();
-                musicBtn.innerHTML = '<i class="fas fa-music"></i>';
-            } else {
-                audioCtx.play().catch(e => console.log("autoplay blocked - user interaction needed"));
-                musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            }
+            if(!audioCtx) { audioCtx = new Audio('01 - Kalyanam Vybhogam - SenSongsMp3.Co.mp3'); audioCtx.loop = true; audioCtx.volume = 0.2; }
+            if(isMusicPlaying) { audioCtx.pause(); musicBtn.innerHTML = '<i class="fas fa-music"></i>'; }
+            else { audioCtx.play().catch(e=>console.log); musicBtn.innerHTML = '<i class="fas fa-pause"></i>'; }
             isMusicPlaying = !isMusicPlaying;
         });
-
-        // Force video to play on mobile
         const heroVideo = document.querySelector('.hero-video');
-        if(heroVideo) {
-            heroVideo.play().catch(e => console.log('Video autoplay prevented, will play on touch'));
-            if(isMobile) {
-                document.body.addEventListener('touchstart', function() {
-                    if(heroVideo.paused) {
-                        heroVideo.play().catch(e => {});
-                    }
-                }, { once: true });
-            }
-        }
-        
-        console.log("Countdown timer is now working correctly for April 26, 2025 at 7:00 PM!");
+        if(heroVideo && heroVideo.paused) heroVideo.play().catch(e=>{});
     </script>
 </body>
 </html>
