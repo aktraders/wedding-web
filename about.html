@@ -6,7 +6,7 @@
     <title>Royal Union | Ananth & Suvarna | Grand Indian Wedding Invitation</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 -->
+    <!-- Font Awesome 6 (for other icons like phone, whatsapp, etc.) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- AOS Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -155,7 +155,7 @@
             .section-title { font-size: 2rem; }
         }
 
-        /* Gold-Themed Cyber Cards for Events */
+        /* Gold-Themed Cyber Cards for Events - Updated with Image Support */
         .events-cyber-grid {
             display: grid;
             gap: 2rem;
@@ -172,14 +172,14 @@
 
         .cyber-card-container {
             position: relative;
-            width: 260px;
-            height: 340px;
+            width: 280px;
+            height: 380px;
             transition: 200ms;
             margin: 0 auto;
         }
         .cyber-card-container:active {
-            width: 250px;
-            height: 330px;
+            width: 270px;
+            height: 370px;
         }
         .cyber-card {
             position: absolute;
@@ -190,7 +190,7 @@
             align-items: center;
             border-radius: 20px;
             transition: 700ms;
-            background: linear-gradient(45deg, #2a1a0a, #3d2a1a);
+            background: linear-gradient(145deg, #2a1a0a, #3d2a1a);
             border: 2px solid rgba(255, 180, 70, 0.3);
             overflow: hidden;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255, 180, 70, 0.1);
@@ -205,15 +205,25 @@
             justify-content: center;
             text-align: center;
             padding: 1rem;
+            z-index: 2;
         }
-        .event-icon-cyber {
-            font-size: 3rem;
-            color: #FFD966;
+        /* Event Image Styling */
+        .event-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #FFD966;
+            box-shadow: 0 0 20px rgba(255, 200, 80, 0.5);
             margin-bottom: 1rem;
-            text-shadow: 0 0 12px rgba(255, 200, 80, 0.6);
+            transition: transform 0.3s ease;
+        }
+        .cyber-card:hover .event-image {
+            transform: scale(1.05);
+            border-color: #FFB347;
         }
         .event-title-cyber {
-            font-size: 1.7rem;
+            font-size: 1.5rem;
             font-weight: 800;
             letter-spacing: 2px;
             background: linear-gradient(135deg, #FFD966, #FFB347);
@@ -223,10 +233,29 @@
             margin: 0.5rem 0;
         }
         .event-details-cyber {
-            font-size: 0.85rem;
-            color: rgba(255, 240, 200, 0.8);
-            margin-top: 0.5rem;
-            line-height: 1.4;
+            font-size: 0.8rem;
+            color: rgba(255, 240, 200, 0.9);
+            margin-top: 0.3rem;
+            line-height: 1.5;
+        }
+        .location-link {
+            display: inline-block;
+            color: #FFD966;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 8px;
+            padding: 5px 12px;
+            background: rgba(255, 180, 70, 0.2);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.75rem;
+            border: 1px solid rgba(255, 180, 70, 0.5);
+        }
+        .location-link:hover {
+            background: rgba(255, 180, 70, 0.4);
+            color: #FFF0C0;
+            transform: translateY(-2px);
+            border-color: #FFB347;
         }
         .tracker-grid {
             perspective: 800px;
@@ -299,7 +328,7 @@
         .event-particles span:nth-child(5) { --x:1; --y:0.5; top:45%; left:70%; }
         .event-particles span:nth-child(6) { --x:-1; --y:0.5; top:80%; right:60%; }
 
-        /* Gold rotating border for cyber card on hover accent */
+        /* Gold rotating border for cyber card */
         .cyber-card::before {
             content: '';
             position: absolute;
@@ -411,7 +440,7 @@
             .animated-card::before { width: 70px; }
         }
 
-        /* Venue */
+        /* Venue, Countdown, Contact - kept same */
         .venue-container {
             display: flex;
             flex-wrap: wrap;
@@ -434,8 +463,6 @@
             border-radius: 28px;
             border: 1px solid rgba(255, 180, 70, 0.5);
         }
-
-        /* Countdown */
         .countdown {
             display: flex;
             justify-content: center;
@@ -463,8 +490,6 @@
             .time-box { padding: 0.7rem 1rem; min-width: 65px; }
             .time-num { font-size: 1.4rem; }
         }
-
-        /* Contact Buttons */
         .contact-buttons {
             display: flex;
             justify-content: center;
@@ -508,7 +533,6 @@
             display: inline-block;
         }
         .social-icons a:hover { transform: scale(1.2); text-shadow: 0 0 12px gold; }
-
         .music-toggle, .scroll-top {
             position: fixed;
             bottom: 20px;
@@ -535,7 +559,6 @@
             color: #1a0e0b;
         }
         .music-toggle:hover, .scroll-top:hover { transform: scale(1.1); background: #FFB347; color: #1a0a0a; }
-        
         .lightbox {
             position: fixed;
             top: 0;
@@ -559,13 +582,7 @@
     <div class="music-toggle" id="musicToggle"><i class="fas fa-music"></i></div>
     <div class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></div>
 
-    <div class="navbar">
-        <a href="#home">Home</a>
-        <a href="#events">Celebrations</a>
-        <a href="#gallery">Moments</a>
-        <a href="#venue">Venue</a>
-        <a href="#contact">Contact</a>
-    </div>
+    
 
     <section id="home" class="hero">
         <video autoplay muted loop playsinline disablePictureInPicture class="hero-video">
@@ -684,19 +701,47 @@
         }
         startCountdown();
 
-        // Build Gold-Themed Cyber Cards for Events
+        // Updated Events Data with Images and Google Maps Links
         const eventsData = [
-            { icon: "fas fa-gem", name: "Engagement", details: "📍 Lotus Hall, Jaipur<br>📅 20th April 2025 · 7 PM" },
-            { icon: "fas fa-leaf", name: "Haldi", details: "📍 Royal Courtyard<br>📅 24th April 2025 · 9 AM" },
-            { icon: "fas fa-palette", name: "Mehendi", details: "📍 Palace Lawns<br>📅 25th April 2025 · 4 PM" },
-            { icon: "fas fa-fire", name: "Wedding", details: "📍 Grand Heritage, Udaipur<br>📅 26th April 2025 · 7 PM" }
+            { 
+                name: "Engagement", 
+                image: "https://www.royalpalmsolapur.com/wp-content/uploads/2022/04/Engagement-Ceremony-at-Royal-Pal.jpg",
+                locationName: "Lotus Hall, Jaipur",
+                date: "20th April 2025 · 7 PM",
+                mapLink: "https://www.google.com/maps/place/THIKANA+MANDIR+SRI+GOVINDDEVJI+,+JAIPUR/@26.8858423,75.6247145,50189m/data=!3m1!1e3!4m10!1m2!2m1!1sjaipur+temple!3m6!1s0x396db4324eeda797:0x2260d13cd55e605c!8m2!3d26.9288341!4d75.8240701!15sCg1qYWlwdXIgdGVtcGxlWg8iDWphaXB1ciB0ZW1wbGWSAQxoaW5kdV90ZW1wbGXgAQA!16s%2Fm%2F027048m?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
+            },
+            { 
+                name: "Haldi", 
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIGl0u-x6yCUmPiHX2eiQ7xsulmMEpPQUScg&s",
+                locationName: "Royal Courtyard",
+                date: "24th April 2025 · 9 AM",
+                mapLink: "https://www.google.com/maps/place/THIKANA+MANDIR+SRI+GOVINDDEVJI+,+JAIPUR/@26.8858423,75.6247145,50189m/data=!3m1!1e3!4m10!1m2!2m1!1sjaipur+temple!3m6!1s0x396db4324eeda797:0x2260d13cd55e605c!8m2!3d26.9288341!4d75.8240701!15sCg1qYWlwdXIgdGVtcGxlWg8iDWphaXB1ciB0ZW1wbGWSAQxoaW5kdV90ZW1wbGXgAQA!16s%2Fm%2F027048m?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
+            },
+            { 
+                name: "Mehendi", 
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIoWB9sEaHXkd9t7S5KW0vVC96eMN0Pmht0yHrTdIoZw&s",
+                locationName: "Palace Lawns",
+                date: "25th April 2025 · 4 PM",
+                mapLink: "https://www.google.com/maps/place/THIKANA+MANDIR+SRI+GOVINDDEVJI+,+JAIPUR/@26.8858423,75.6247145,50189m/data=!3m1!1e3!4m10!1m2!2m1!1sjaipur+temple!3m6!1s0x396db4324eeda797:0x2260d13cd55e605c!8m2!3d26.9288341!4d75.8240701!15sCg1qYWlwdXIgdGVtcGxlWg8iDWphaXB1ciB0ZW1wbGWSAQxoaW5kdV90ZW1wbGXgAQA!16s%2Fm%2F027048m?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
+            },
+            { 
+                name: "Wedding", 
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl_5nxRfIbP3JLYjilyw9v1tF-gYy6E5SOjc9WKIl8PA&s",
+                locationName: "Grand Heritage, Udaipur",
+                date: "26th April 2025 · 7 PM",
+                mapLink: "https://www.google.com/maps/place/THIKANA+MANDIR+SRI+GOVINDDEVJI+,+JAIPUR/@26.8858423,75.6247145,50189m/data=!3m1!1e3!4m10!1m2!2m1!1sjaipur+temple!3m6!1s0x396db4324eeda797:0x2260d13cd55e605c!8m2!3d26.9288341!4d75.8240701!15sCg1qYWlwdXIgdGVtcGxlWg8iDWphaXB1ciB0ZW1wbGWSAQxoaW5kdV90ZW1wbGXgAQA!16s%2Fm%2F027048m?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
+            }
         ];
+
         const grid = document.getElementById('cyberEventsGrid');
         grid.innerHTML = '';
+        
         eventsData.forEach(ev => {
             const containerDiv = document.createElement('div');
             containerDiv.className = 'cyber-card-container';
             containerDiv.setAttribute('data-aos', 'zoom-in');
+            
+            // Tracker grid for 3D effect
             const trackerGrid = document.createElement('div');
             trackerGrid.className = 'tracker-grid';
             for(let i=0; i<25; i++){
@@ -716,18 +761,25 @@
                 });
                 trackerGrid.appendChild(cell);
             }
+            
+            // Card content with Image instead of Icon, and Clickable Location
             const cardDiv = document.createElement('div');
             cardDiv.className = 'cyber-card';
             cardDiv.innerHTML = `
                 <div class="card-content-cyber">
-                    <i class="${ev.icon} event-icon-cyber"></i>
+                    <img src="${ev.image}" alt="${ev.name}" class="event-image" loading="lazy">
                     <div class="event-title-cyber">${ev.name}</div>
-                    <div class="event-details-cyber">${ev.details}</div>
+                    <div class="event-details-cyber">
+                        <i class="fas fa-calendar-alt"></i> ${ev.date}<br>
+                        <i class="fas fa-map-marker-alt"></i> 
+                        <a href="${ev.mapLink}" target="_blank" class="location-link" onclick="event.stopPropagation()">
+                            <i class="fas fa-location-dot"></i> ${ev.locationName}
+                        </a>
+                    </div>
                     <div class="event-particles"><span></span><span></span><span></span><span></span><span></span><span></span></div>
                     <div class="corner-borders"><span></span><span></span><span></span><span></span></div>
                     <div class="glare-overlay"></div>
                     <div class="scan-line-anim"></div>
-                    <div id="prompt" style="bottom:20px; font-size:10px;">✦ HOVER ✦</div>
                 </div>
             `;
             containerDiv.appendChild(trackerGrid);
@@ -735,16 +787,16 @@
             grid.appendChild(containerDiv);
         });
 
-        // Gallery Cards
+        // Gallery Cards (unchanged but with updated images list)
         const galleryImages = [
             "https://sanatanajourney.com/wp-content/uploads/2025/01/Sharad-Purnima-6.png",
-            "https://plus.unsplash.com/premium_photo-1682092637891-d9979cc93f6e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aGluZHUlMjB3ZWRkaW5nfGVufDB8fDB8fHww",
+            "https://plus.unsplash.com/premium_photo-1682092637891-d9979cc93f6e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMlBf1hvkCWrCYNho7mKTdT-xrXz16hEJqYYtOCds0LgcsvX0tqxsT0vQ&s",
-            "https://media.licdn.com/dms/image/v2/D5612AQHID77btj_3zA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1688018507126?e=2147483647&v=beta&t=_ZVaFR-12A7t8n0aheRwd9Q4If-mWmDyeaqs0QAPUuE",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeO-XOxuWPy73AVu7uBDbC6HGZ4Zgyk_HYbw&s",
             "https://www.onlykollywood.com/wp-content/uploads/2026/02/vijay-devarakonda-rashmika-mandanna.jpg",
-            "https://media.indulgexpress.com/indulgexpress%2F2026-02-26%2Fitv9c1z9%2FMixCollage-26-Feb-2026-08-07-PM-9812.jpg?w=480&auto=format%2Ccompress",
+            "https://media.indulgexpress.com/indulgexpress%2F2026-02-26%2Fitv9c1z9%2FMixCollage-26-Feb-2026-08-07-PM-9812.jpg",
             "https://viewsbangladesh.com/_next/image/?url=https%3A%2F%2Fimagedelivery.net%2FHRs_9pnDDn9uipVGixpHsg%2F482b63f5-acb9-47e0-6326-58101490d700%2Fpublic&w=1920&q=75",
-            "https://img.mathrubhumi.com/view/acePublic/alias/contentid/1pghml7mv7hqicltv64/1/rashmika-mandanna-vijay-deverakonda-jpg.webp?f=3%3A2&q=0.75&w=900"
+            "https://img.mathrubhumi.com/view/acePublic/alias/contentid/1pghml7mv7hqicltv64/1/rashmika-mandanna-vijay-deverakonda-jpg.webp"
         ];
         const galleryDescriptions = ["Sacred Ceremony", "Mehendi Magic", "Eternal Vows", "Royal Decor", "Mangal Phere", "Bridal Grace", "Divine Mandap", "Grand Celebration"];
         const galleryGridContainer = document.getElementById('galleryGrid');
@@ -775,6 +827,7 @@
         const lightboxImg = document.getElementById('lightboxImg');
         lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
 
+        // Smooth scrolling for navbar
         document.querySelectorAll('.navbar a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -787,6 +840,7 @@
         const scrollTopBtn = document.getElementById('scrollTop');
         scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         
+        // Background Music
         let audioCtx = null, isMusicPlaying = false;
         const musicBtn = document.getElementById('musicToggle');
         musicBtn.addEventListener('click', () => {
