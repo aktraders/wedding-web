@@ -24,6 +24,24 @@
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
+        .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: black; /* fills empty space if aspect ratio differs */
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* ✅ IMPORTANT CHANGE */
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
 
         /* Custom Cursor Sparkle (Desktop) */
         @media (min-width: 1024px) {
