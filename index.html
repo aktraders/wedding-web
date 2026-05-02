@@ -6,23 +6,32 @@
 <title>Wedding Invitation</title>
 
 <style>
+/* Reset */
 body {
     margin: 0;
     font-family: sans-serif;
 }
 
-/* Background Image */
+/* Background (Default = Mobile) */
 .bg {
     background: url('ChatGPT Image May 2, 2026, 02_22_52 PM.png') no-repeat center center/cover;
-    height: 100vh;
+    height: 100dvh; /* better mobile height */
     width: 100%;
     position: relative;
+}
+
+/* Desktop Background */
+@media (min-width: 768px) {
+    .bg {
+        background: url('ChatGPT Image May 2, 2026, 03_17_34 PM.png') no-repeat center center/cover;
+        height: 100vh;
+    }
 }
 
 /* Button */
 .btn {
     position: absolute;
-    bottom: 90px;
+    bottom: 70px;
     left: 50%;
     transform: translateX(-50%);
     padding: 15px 30px;
@@ -36,9 +45,26 @@ body {
     transition: 0.3s;
 }
 
-/* Hover Effect */
+/* Hover */
 .btn:hover {
     transform: translateX(-50%) scale(1.05);
+}
+
+/* Mobile Adjust */
+@media (max-width: 600px) {
+    .btn {
+        bottom: 40px;
+        font-size: 14px;
+        padding: 12px 24px;
+    }
+}
+
+/* Desktop Adjust */
+@media (min-width: 768px) {
+    .btn {
+        bottom: 80px;
+        font-size: 18px;
+    }
 }
 </style>
 </head>
@@ -51,7 +77,7 @@ body {
 
 <script>
 function openPage(){
-    window.location.href = "intro.html"; // redirect page
+    window.location.href = "intro.html";
 }
 </script>
 
