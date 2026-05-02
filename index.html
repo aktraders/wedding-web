@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Invitation</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+/* Background Image */
+.bg {
+    background: url('ChatGPT Image May 2, 2026, 02_22_52 PM.png') no-repeat center center/cover;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+/* Button */
+.btn {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 40px;
+    background: linear-gradient(45deg, gold, #ffcc66);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 200, 0, 0.8);
+    transition: 0.3s;
+}
+
+/* Hover Effect */
+.btn:hover {
+    transform: translateX(-50%) scale(1.05);
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+    <button class="btn" onclick="openPage()">Open Invitation</button>
+</div>
+
+<script>
+function openPage(){
+    window.location.href = "intro.html"; // redirect page
+}
+</script>
+
+</body>
+</html>
