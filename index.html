@@ -4,82 +4,665 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wedding Invitation</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Italiana&display=swap" rel="stylesheet">
 <style>
-/* Reset */
-body {
-    margin: 0;
-    font-family: sans-serif;
+/* ─── RESET ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; }
+
+:root {
+    --gold: #D4AF37;
+    --gold-light: #F5E17A;
+    --gold-dim: rgba(212,175,55,0.35);
+    --rose: #C9184A;
+    --ink: #07020B;
+    --cream: #FFF8EC;
 }
 
-/* Background (Default = Mobile) */
+/* ─── BACKGROUND ─── */
 .bg {
-    background: url('ChatGPT Image May 2, 2026, 02_22_52 PM.png') no-repeat center center/cover;
-    height: 100dvh; /* better mobile height */
-    width: 100%;
     position: relative;
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
+    background: url('ChatGPT Image May 2, 2026, 02_22_52 PM.png') no-repeat center center / cover;
 }
-
-/* Desktop Background */
 @media (min-width: 768px) {
     .bg {
-        background: url('ChatGPT Image May 2, 2026, 03_17_34 PM.png') no-repeat center center/cover;
+        background-image: url('ChatGPT Image May 2, 2026, 03_17_34 PM.png');
         height: 100vh;
     }
 }
 
-/* Button */
-.btn {
+/* ─── DARK OVERLAY (animated vignette) ─── */
+.overlay {
     position: absolute;
-    bottom: 70px;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 50% 50%, transparent 20%, rgba(7,2,11,0.55) 100%),
+        linear-gradient(to bottom, rgba(7,2,11,0.25) 0%, transparent 30%, transparent 60%, rgba(7,2,11,0.7) 100%);
+    animation: overlayBreath 6s ease-in-out infinite alternate;
+}
+@keyframes overlayBreath {
+    from { opacity: 0.85; }
+    to   { opacity: 1; }
+}
+
+/* ─── GRAIN TEXTURE ─── */
+.grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0.3;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* ─── STAR CANVAS ─── */
+#stars {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ─── FLOATING PARTICLES (petals) ─── */
+.particle {
+    position: absolute;
+    border-radius: 50% 0 50% 0;
+    pointer-events: none;
+    z-index: 2;
+    animation: drift linear infinite;
+}
+@keyframes drift {
+    0%   { transform: translateY(110vh) rotate(0deg) translateX(0px); opacity: 0; }
+    8%   { opacity: 0.7; }
+    92%  { opacity: 0.4; }
+    100% { transform: translateY(-10vh) rotate(540deg) translateX(30px); opacity: 0; }
+}
+
+/* ─── MANDALA RING ─── */
+.mandala-wrap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    pointer-events: none;
+}
+.mandala {
+    width: min(80vw, 80vh);
+    height: min(80vw, 80vh);
+    opacity: 0;
+    animation: mandalaReveal 2s 0.5s ease forwards, mandalaRotate 90s linear infinite 2.5s;
+}
+@keyframes mandalaReveal {
+    from { opacity: 0; transform: scale(0.85) rotate(-20deg); }
+    to   { opacity: 0.08; transform: scale(1) rotate(0deg); }
+}
+@keyframes mandalaRotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ─── HORIZONTAL GOLD LINES ─── */
+.line-top, .line-bottom {
+    position: absolute;
+    left: 5%;
+    width: 90%;
+    height: 1px;
+    z-index: 4;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transform-origin: center;
+    animation: lineExpand 1.4s 1s cubic-bezier(0.23,1,0.32,1) forwards;
+}
+.line-top    { top: 6%; }
+.line-bottom { bottom: 6%; }
+@keyframes lineExpand {
+    to { transform: scaleX(1); }
+}
+
+/* ─── CORNER ORNAMENTS ─── */
+.corner {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    z-index: 5;
+    opacity: 0;
+    animation: cornerFade 1s 1.4s ease forwards;
+}
+.corner svg { width: 100%; height: 100%; }
+.corner.tl { top: 3%; left: 3%; }
+.corner.tr { top: 3%; right: 3%; transform: scaleX(-1); }
+.corner.bl { bottom: 3%; left: 3%; transform: scaleY(-1); }
+.corner.br { bottom: 3%; right: 3%; transform: scale(-1,-1); }
+@keyframes cornerFade { to { opacity: 1; } }
+@media (max-width: 480px) {
+    .corner { width: 36px; height: 36px; }
+}
+
+/* ─── CENTER CONTENT ─── */
+.center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 6;
+    text-align: center;
+    padding: 1rem;
+    gap: 0;
+}
+
+/* Eyebrow */
+.eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.45rem, 1.5vw, 0.65rem);
+    letter-spacing: 7px;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: riseIn 1s 1.2s ease forwards;
+    margin-bottom: 1.2rem;
+}
+
+/* Main title */
+.main-title {
+    font-family: 'Italiana', serif;
+    font-size: clamp(3.2rem, 12vw, 9rem);
+    line-height: 0.88;
+    color: transparent;
+    background: linear-gradient(150deg, #F5E17A 0%, #D4AF37 30%, #FFFDE0 50%, #D4AF37 70%, #A07830 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-size: 250% 250%;
+    animation: titleShimmer 5s ease infinite, riseIn 1.2s 1.5s ease forwards;
+    opacity: 0;
+    filter: drop-shadow(0 0 50px rgba(212,175,55,0.25));
+    margin-bottom: 0.3rem;
+}
+@keyframes titleShimmer {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.ampersand {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    color: var(--rose);
+    line-height: 1.3;
+    opacity: 0;
+    animation: riseIn 1s 1.8s ease forwards;
+    margin-bottom: 0.2rem;
+    filter: drop-shadow(0 0 20px rgba(201,24,74,0.4));
+}
+
+/* Divider line with diamond */
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: clamp(160px, 40vw, 340px);
+    margin: 1.2rem 0;
+    opacity: 0;
+    animation: riseIn 0.8s 2s ease forwards;
+}
+.divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+.divider-line.r { background: linear-gradient(270deg, transparent, var(--gold)); }
+.divider-diamond {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+    animation: diamondPulse 2s ease-in-out infinite 2.2s;
+}
+@keyframes diamondPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.6); }
+    50%       { box-shadow: 0 0 0 6px rgba(212,175,55,0); }
+}
+
+/* Date pill */
+.date-pill {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.55rem, 1.8vw, 0.8rem);
+    letter-spacing: 4px;
+    color: var(--gold-light);
+    border: 1px solid var(--gold-dim);
+    border-radius: 60px;
+    padding: 0.5rem 1.8rem;
+    backdrop-filter: blur(12px);
+    background: rgba(212,175,55,0.07);
+    opacity: 0;
+    animation: riseIn 0.8s 2.2s ease forwards;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2.4rem;
+}
+.date-pill::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.18), transparent);
+    transform: translateX(-100%);
+    animation: pillSweep 3s 3s ease infinite;
+}
+@keyframes pillSweep {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ─── THE BUTTON ─── */
+.btn-wrap {
+    opacity: 0;
+    animation: riseIn 1s 2.6s ease forwards;
+}
+
+.btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 44px;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.7rem, 2vw, 0.85rem);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--ink);
+    border: none;
+    border-radius: 60px;
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+    z-index: 0;
+    transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s;
+    /* Gold fill background */
+    background: linear-gradient(135deg, #F5E17A 0%, #D4AF37 45%, #B8860B 100%);
+    box-shadow:
+        0 0 0 0 rgba(212,175,55,0),
+        0 8px 32px rgba(0,0,0,0.5),
+        0 0 40px rgba(212,175,55,0.25);
+}
+
+/* Rotating conic gradient ring behind button */
+.btn-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 60px;
+    background: conic-gradient(from var(--a,0deg), transparent 0%, var(--gold) 15%, transparent 30%);
+    animation: ringRotate 2s linear infinite;
+    z-index: -1;
+    filter: blur(3px);
+    opacity: 0.7;
+}
+@property --a { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes ringRotate { to { --a: 360deg; } }
+
+/* Inner shimmer sweep */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.5s cubic-bezier(0.23,1,0.32,1);
+}
+.btn:hover::before { left: 160%; }
+
+/* Ripple */
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 60px;
+    background: rgba(255,255,255,0);
+    transition: background 0.3s;
+}
+.btn:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 0 0 0 rgba(212,175,55,0), 0 16px 48px rgba(0,0,0,0.6), 0 0 60px rgba(212,175,55,0.45); }
+.btn:active { transform: translateY(-1px) scale(1.01); }
+
+/* Arrow icon inside button */
+.btn-icon {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(7,2,11,0.25);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s;
+}
+.btn:hover .btn-icon { transform: translateX(4px) rotate(45deg); }
+.btn-icon svg { width: 9px; height: 9px; }
+
+/* Pulse ring around button */
+.btn-pulse {
+    position: absolute;
+    inset: -1px;
+    border-radius: 60px;
+    border: 1px solid rgba(212,175,55,0.5);
+    animation: pulseRing 2s ease-out infinite 3.4s;
+}
+@keyframes pulseRing {
+    0%   { transform: scale(1);    opacity: 0.7; }
+    100% { transform: scale(1.18); opacity: 0; }
+}
+
+/* ─── SCROLL HINT ─── */
+.scroll-hint {
+    position: absolute;
+    bottom: 10%;
     left: 50%;
     transform: translateX(-50%);
-    padding: 15px 30px;
-    font-size: 18px;
-    border: none;
-    border-radius: 40px;
-    background: linear-gradient(45deg, gold, #ffcc66);
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 0 20px rgba(255, 200, 0, 0.8);
-    transition: 0.3s;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    animation: riseIn 1s 3.2s ease forwards;
+}
+.scroll-hint span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 5px;
+    color: rgba(212,175,55,0.4);
+}
+.scroll-needle {
+    width: 1px; height: 36px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: needleBob 1.8s ease-in-out infinite 3.4s;
+}
+@keyframes needleBob {
+    0%,100% { transform: scaleY(1); opacity: 0.4; }
+    50%      { transform: scaleY(1.15); opacity: 1; }
 }
 
-/* Hover */
-.btn:hover {
-    transform: translateX(-50%) scale(1.05);
+/* ─── RISE IN ─── */
+@keyframes riseIn {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Mobile Adjust */
-@media (max-width: 600px) {
-    .btn {
-        bottom: 40px;
-        font-size: 14px;
-        padding: 12px 24px;
-    }
+/* ─── CURSOR ─── */
+.c-ring {
+    position: fixed;
+    width: 34px; height: 34px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: width 0.3s, height 0.3s, opacity 0.3s, border-color 0.3s;
+    mix-blend-mode: screen;
 }
-
-/* Desktop Adjust */
-@media (min-width: 768px) {
-    .btn {
-        bottom: 80px;
-        font-size: 18px;
-    }
+.c-dot {
+    position: fixed;
+    width: 4px; height: 4px;
+    background: var(--gold-light);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
 }
+@media (hover: none) { .c-ring, .c-dot { display: none; } }
 </style>
 </head>
-
 <body>
 
+<!-- Custom cursor -->
+<div class="c-ring" id="cRing"></div>
+<div class="c-dot"  id="cDot"></div>
+
 <div class="bg">
-    <button class="btn" onclick="openPage()">Open Invitation</button>
+
+    <!-- Layers -->
+    <div class="overlay"></div>
+    <div class="grain"></div>
+    <canvas id="stars"></canvas>
+
+    <!-- Floating petals container (JS fills) -->
+    <div id="petals"></div>
+
+    <!-- Rotating mandala -->
+    <div class="mandala-wrap">
+        <svg class="mandala" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="250" cy="250" r="240" stroke="#D4AF37" stroke-width="0.6"/>
+            <circle cx="250" cy="250" r="210" stroke="#D4AF37" stroke-width="0.3"/>
+            <circle cx="250" cy="250" r="180" stroke="#D4AF37" stroke-width="0.6"/>
+            <circle cx="250" cy="250" r="150" stroke="#D4AF37" stroke-width="0.3"/>
+            <circle cx="250" cy="250" r="120" stroke="#D4AF37" stroke-width="0.6"/>
+            <circle cx="250" cy="250" r="90"  stroke="#D4AF37" stroke-width="0.3"/>
+            <circle cx="250" cy="250" r="60"  stroke="#D4AF37" stroke-width="0.6"/>
+            <circle cx="250" cy="250" r="30"  stroke="#D4AF37" stroke-width="0.3"/>
+            <line x1="250" y1="10"  x2="250" y2="490" stroke="#D4AF37" stroke-width="0.3"/>
+            <line x1="10"  y1="250" x2="490" y2="250" stroke="#D4AF37" stroke-width="0.3"/>
+            <line x1="76"  y1="76"  x2="424" y2="424" stroke="#D4AF37" stroke-width="0.3"/>
+            <line x1="424" y1="76"  x2="76"  y2="424" stroke="#D4AF37" stroke-width="0.3"/>
+            <line x1="250" y1="10"  x2="424" y2="76"  stroke="#D4AF37" stroke-width="0.2"/>
+            <line x1="424" y1="76"  x2="490" y2="250" stroke="#D4AF37" stroke-width="0.2"/>
+            <line x1="490" y1="250" x2="424" y2="424" stroke="#D4AF37" stroke-width="0.2"/>
+            <line x1="424" y1="424" x2="250" y2="490" stroke="#D4AF37" stroke-width="0.2"/>
+            <line x1="250" y1="490" x2="76"  y2="424" stroke="#D4AF37" stroke-width="0.2"/>
+            <line x1="76"  y1="424" x2="10"  y2="250" stroke="#D4AF37" stroke-width="0.2"/>
+            <line x1="10"  y1="250" x2="76"  y2="76"  stroke="#D4AF37" stroke-width="0.2"/>
+            <line x1="76"  y1="76"  x2="250" y2="10"  stroke="#D4AF37" stroke-width="0.2"/>
+            <g transform="rotate(0,250,250)">  <ellipse cx="250" cy="120" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.4"/></g>
+            <g transform="rotate(45,250,250)"> <ellipse cx="250" cy="120" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.4"/></g>
+            <g transform="rotate(90,250,250)"> <ellipse cx="250" cy="120" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.4"/></g>
+            <g transform="rotate(135,250,250)"><ellipse cx="250" cy="120" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.4"/></g>
+            <g transform="rotate(180,250,250)"><ellipse cx="250" cy="120" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.4"/></g>
+            <g transform="rotate(225,250,250)"><ellipse cx="250" cy="120" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.4"/></g>
+            <g transform="rotate(270,250,250)"><ellipse cx="250" cy="120" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.4"/></g>
+            <g transform="rotate(315,250,250)"><ellipse cx="250" cy="120" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.4"/></g>
+            <circle cx="250" cy="250" r="10" fill="#D4AF37" fill-opacity="0.6"/>
+            <circle cx="250" cy="250" r="5"  fill="#D4AF37" fill-opacity="0.9"/>
+        </svg>
+    </div>
+
+    <!-- Decorative frame lines -->
+    <div class="line-top"></div>
+    <div class="line-bottom"></div>
+
+    <!-- Corner ornaments -->
+    <div class="corner tl">
+        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 56 L4 4 L56 4" stroke="#D4AF37" stroke-width="1" fill="none"/>
+            <path d="M4 34 L4 4 L34 4" stroke="#D4AF37" stroke-width="0.5" fill="none" opacity="0.5"/>
+            <circle cx="4"  cy="4"  r="3" fill="#D4AF37" fill-opacity="0.8"/>
+            <circle cx="56" cy="4"  r="2" fill="#D4AF37" fill-opacity="0.5"/>
+            <circle cx="4"  cy="56" r="2" fill="#D4AF37" fill-opacity="0.5"/>
+            <line x1="4" y1="20" x2="14" y2="20" stroke="#D4AF37" stroke-width="0.6" opacity="0.5"/>
+            <line x1="20" y1="4" x2="20" y2="14" stroke="#D4AF37" stroke-width="0.6" opacity="0.5"/>
+        </svg>
+    </div>
+    <div class="corner tr">
+        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 56 L4 4 L56 4" stroke="#D4AF37" stroke-width="1" fill="none"/>
+            <path d="M4 34 L4 4 L34 4" stroke="#D4AF37" stroke-width="0.5" fill="none" opacity="0.5"/>
+            <circle cx="4"  cy="4"  r="3" fill="#D4AF37" fill-opacity="0.8"/>
+            <circle cx="56" cy="4"  r="2" fill="#D4AF37" fill-opacity="0.5"/>
+            <circle cx="4"  cy="56" r="2" fill="#D4AF37" fill-opacity="0.5"/>
+            <line x1="4" y1="20" x2="14" y2="20" stroke="#D4AF37" stroke-width="0.6" opacity="0.5"/>
+            <line x1="20" y1="4" x2="20" y2="14" stroke="#D4AF37" stroke-width="0.6" opacity="0.5"/>
+        </svg>
+    </div>
+    <div class="corner bl">
+        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 56 L4 4 L56 4" stroke="#D4AF37" stroke-width="1" fill="none"/>
+            <path d="M4 34 L4 4 L34 4" stroke="#D4AF37" stroke-width="0.5" fill="none" opacity="0.5"/>
+            <circle cx="4"  cy="4"  r="3" fill="#D4AF37" fill-opacity="0.8"/>
+            <circle cx="56" cy="4"  r="2" fill="#D4AF37" fill-opacity="0.5"/>
+            <circle cx="4"  cy="56" r="2" fill="#D4AF37" fill-opacity="0.5"/>
+            <line x1="4" y1="20" x2="14" y2="20" stroke="#D4AF37" stroke-width="0.6" opacity="0.5"/>
+            <line x1="20" y1="4" x2="20" y2="14" stroke="#D4AF37" stroke-width="0.6" opacity="0.5"/>
+        </svg>
+    </div>
+    <div class="corner br">
+        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 56 L4 4 L56 4" stroke="#D4AF37" stroke-width="1" fill="none"/>
+            <path d="M4 34 L4 4 L34 4" stroke="#D4AF37" stroke-width="0.5" fill="none" opacity="0.5"/>
+            <circle cx="4"  cy="4"  r="3" fill="#D4AF37" fill-opacity="0.8"/>
+            <circle cx="56" cy="4"  r="2" fill="#D4AF37" fill-opacity="0.5"/>
+            <circle cx="4"  cy="56" r="2" fill="#D4AF37" fill-opacity="0.5"/>
+            <line x1="4" y1="20" x2="14" y2="20" stroke="#D4AF37" stroke-width="0.6" opacity="0.5"/>
+            <line x1="20" y1="4" x2="20" y2="14" stroke="#D4AF37" stroke-width="0.6" opacity="0.5"/>
+        </svg>
+    </div>
+
+    <!-- Centre content -->
+    <div class="center">
+        <p class="eyebrow">Together · Forever · Blessed</p>
+
+        <h1 class="main-title">
+            Vijay
+            <span class="ampersand">&amp; Rashmika</span>
+        </h1>
+
+        <div class="divider">
+            <div class="divider-line"></div>
+            <div class="divider-diamond"></div>
+            <div class="divider-line r"></div>
+        </div>
+
+        <div class="date-pill">26 · August · 2026 · Udaipur</div>
+
+        <div class="btn-wrap">
+            <button class="btn" onclick="openPage()">
+                <div class="btn-ring"></div>
+                <div class="btn-pulse"></div>
+                Open Invitation
+                <div class="btn-icon">
+                    <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 5h6M6 3l2 2-2 2" stroke="#07020B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-needle"></div>
+    </div>
+
 </div>
 
 <script>
-function openPage(){
-    window.location.href = "intro.html";
+/* ── CURSOR ── */
+const cRing = document.getElementById('cRing');
+const cDot  = document.getElementById('cDot');
+let mx=0, my=0, rx=0, ry=0;
+document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cDot.style.left = mx + 'px'; cDot.style.top = my + 'px';
+});
+(function animCursor() {
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    cRing.style.left = rx + 'px'; cRing.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+})();
+document.querySelector('.btn').addEventListener('mouseenter', () => {
+    cRing.style.width = '56px'; cRing.style.height = '56px';
+    cRing.style.borderColor = '#F5E17A'; cRing.style.opacity = '0.6';
+});
+document.querySelector('.btn').addEventListener('mouseleave', () => {
+    cRing.style.width = '34px'; cRing.style.height = '34px';
+    cRing.style.borderColor = '#D4AF37'; cRing.style.opacity = '1';
+});
+
+/* ── STARS ── */
+const cv  = document.getElementById('stars');
+const ctx = cv.getContext('2d');
+let W, H, stars = [];
+function resize() {
+    W = cv.width  = window.innerWidth;
+    H = cv.height = window.innerHeight;
+    stars = Array.from({ length: 160 }, () => ({
+        x: Math.random() * W, y: Math.random() * H,
+        r: Math.random() * 1.3 + 0.2,
+        a: Math.random(),
+        sp: Math.random() * 0.004 + 0.001,
+        ph: Math.random() * Math.PI * 2
+    }));
+}
+function drawStars(t) {
+    ctx.clearRect(0, 0, W, H);
+    stars.forEach(s => {
+        const a = (Math.sin(t * s.sp + s.ph) * 0.5 + 0.5) * s.a;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(245,225,122,${a})`;
+        ctx.fill();
+    });
+    requestAnimationFrame(drawStars);
+}
+resize();
+window.addEventListener('resize', resize);
+drawStars(0);
+
+/* ── FLOATING PETALS ── */
+const petalWrap = document.getElementById('petals');
+const isMob = /Mobi|Android/i.test(navigator.userAgent);
+const COUNT = isMob ? 14 : 32;
+const COLORS = [
+    'rgba(255,140,60,0.75)',
+    'rgba(220,30,60,0.65)',
+    'rgba(255,193,7,0.6)',
+    'rgba(212,175,55,0.55)',
+    'rgba(201,24,74,0.5)'
+];
+for (let i = 0; i < COUNT; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const sz  = Math.random() * 10 + 6;
+    const col = COLORS[Math.floor(Math.random() * COLORS.length)];
+    p.style.cssText = `
+        width:${sz}px; height:${sz}px;
+        left:${Math.random() * 100}%;
+        background:${col};
+        animation-duration:${Math.random() * 16 + 10}s;
+        animation-delay:${Math.random() * 14}s;
+        opacity:0;
+        filter: blur(${Math.random() * 0.6}px);
+        border-radius:${Math.random() > 0.5 ? '50% 0 50% 0' : '30% 70% 30% 70%'};
+    `;
+    petalWrap.appendChild(p);
+}
+
+/* ── RIPPLE ON BUTTON CLICK ── */
+document.querySelector('.btn').addEventListener('click', function(e) {
+    const btn  = this;
+    const rect = btn.getBoundingClientRect();
+    const rip  = document.createElement('span');
+    const x    = e.clientX - rect.left;
+    const y    = e.clientY - rect.top;
+    rip.style.cssText = `
+        position:absolute; border-radius:50%;
+        width:10px; height:10px;
+        background:rgba(255,255,255,0.5);
+        left:${x - 5}px; top:${y - 5}px;
+        animation:rippleOut 0.5s ease forwards;
+        pointer-events:none;
+    `;
+    btn.appendChild(rip);
+    rip.addEventListener('animationend', () => rip.remove());
+});
+
+/* Inject ripple keyframe */
+const s = document.createElement('style');
+s.textContent = `@keyframes rippleOut { to { transform:scale(30); opacity:0; } }`;
+document.head.appendChild(s);
+
+/* ── NAVIGATE ── */
+function openPage() {
+    window.location.href = 'intro.html';
 }
 </script>
-
 </body>
 </html>
