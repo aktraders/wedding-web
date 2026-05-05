@@ -1,94 +1,634 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Invitation — Intro</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Italiana&family=Cormorant+Garamond:ital,wght@1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #07020B; }
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+:root {
+    --gold: #D4AF37;
+    --gold-light: #F5E17A;
+    --rose: #C9184A;
+    --ink: #07020B;
+}
 
-  <title>Wedding Invitation</title>
+/* ── VIDEO CONTAINER ── */
+.vc {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+/* Blurred background fill */
+.bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(24px) brightness(0.35) saturate(0.7);
+    transform: scale(1.15);
+    z-index: 0;
+}
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: black;
-    }
+/* Main video */
+.main-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 2;
+}
 
-    .video-container {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-    }
+/* ── STAR CANVAS ── */
+#stars {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
 
-    /* 🔥 BLURRED BACKGROUND VIDEO */
-    .bg-video {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: blur(20px) brightness(0.5);
-      transform: scale(1.2);
-    }
+/* ── VIGNETTE ── */
+.vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse at 50% 50%, transparent 35%, rgba(7,2,11,0.65) 100%),
+        linear-gradient(to bottom, rgba(7,2,11,0.45) 0%, transparent 18%, transparent 82%, rgba(7,2,11,0.7) 100%);
+}
 
-    /* ✅ MAIN CLEAR VIDEO (FULLY VISIBLE) */
-    .main-video {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      z-index: 2;
-    }
+/* ── GRAIN ── */
+.grain {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0.22;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
 
-    body.fade-out {
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-  </style>
+/* ── SCAN LINE (film effect) ── */
+.scanline {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,0,0,0.04) 3px,
+        rgba(0,0,0,0.04) 4px
+    );
+}
+
+/* ── CORNER ORNAMENTS ── */
+.corners {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+}
+.corner {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    opacity: 0;
+    animation: cornerIn 1.2s 0.8s cubic-bezier(0.23,1,0.32,1) forwards;
+}
+.corner.tl { top: 3%; left: 3%; }
+.corner.tr { top: 3%; right: 3%; transform: scaleX(-1); }
+.corner.bl { bottom: 3%; left: 3%; transform: scaleY(-1); }
+.corner.br { bottom: 3%; right: 3%; transform: scale(-1,-1); }
+@keyframes cornerIn {
+    from { opacity: 0; transform: scale(0.6); }
+    to   { opacity: 1; transform: scale(1); }
+}
+.corner.tr { animation: cornerInR 1.2s 0.8s cubic-bezier(0.23,1,0.32,1) forwards; }
+.corner.bl { animation: cornerInB 1.2s 0.8s cubic-bezier(0.23,1,0.32,1) forwards; }
+.corner.br { animation: cornerInBR 1.2s 0.8s cubic-bezier(0.23,1,0.32,1) forwards; }
+@keyframes cornerInR  { from { opacity:0; transform:scaleX(-1) scale(0.6); } to { opacity:1; transform:scaleX(-1) scale(1); } }
+@keyframes cornerInB  { from { opacity:0; transform:scaleY(-1) scale(0.6); } to { opacity:1; transform:scaleY(-1) scale(1); } }
+@keyframes cornerInBR { from { opacity:0; transform:scale(-1,-1) scale(0.6); } to { opacity:1; transform:scale(-1,-1); } }
+@media(max-width:480px){ .corner { width:44px; height:44px; } }
+
+/* ── FRAME LINES ── */
+.frame-h {
+    position: absolute;
+    left: 6%;
+    width: 88%;
+    height: 1px;
+    z-index: 6;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transform-origin: center;
+    animation: expandH 1.5s 1s cubic-bezier(0.23,1,0.32,1) forwards;
+}
+.frame-h.top    { top: 5.5%; }
+.frame-h.bottom { bottom: 5.5%; }
+@keyframes expandH { to { transform: scaleX(1); } }
+
+.frame-v {
+    position: absolute;
+    top: 6%;
+    height: 88%;
+    width: 1px;
+    z-index: 6;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    transform: scaleY(0);
+    transform-origin: center;
+    animation: expandV 1.5s 1.2s cubic-bezier(0.23,1,0.32,1) forwards;
+}
+.frame-v.left  { left: 3%; }
+.frame-v.right { right: 3%; }
+@keyframes expandV { to { transform: scaleY(1); } }
+
+/* ── FLOATING PETALS ── */
+.petals { position: absolute; inset: 0; z-index: 7; pointer-events: none; overflow: hidden; }
+.petal {
+    position: absolute;
+    pointer-events: none;
+    animation: petalFloat linear infinite;
+    opacity: 0;
+}
+@keyframes petalFloat {
+    0%   { transform: translateY(110vh) rotate(0deg)   translateX(0);    opacity: 0; }
+    8%   { opacity: 0.75; }
+    92%  { opacity: 0.45; }
+    100% { transform: translateY(-8vh)  rotate(600deg) translateX(25px);  opacity: 0; }
+}
+
+/* ── MANDALA ── */
+.mandala-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+.mandala-svg {
+    width: min(90vw, 90vh);
+    height: min(90vw, 90vh);
+    opacity: 0;
+    animation: mandalaAppear 2s 0.5s ease forwards, mandalaSpin 120s linear infinite 2.5s;
+}
+@keyframes mandalaAppear {
+    from { opacity: 0; transform: scale(0.9) rotate(-15deg); }
+    to   { opacity: 0.07; transform: scale(1) rotate(0deg); }
+}
+@keyframes mandalaSpin { to { transform: rotate(360deg); } }
+
+/* ── TOP TEXT (eyebrow) ── */
+.top-text {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 8;
+    text-align: center;
+    opacity: 0;
+    animation: riseIn 1s 1.6s ease forwards;
+    white-space: nowrap;
+}
+.top-text span {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.42rem, 1.3vw, 0.6rem);
+    letter-spacing: 7px;
+    color: rgba(212,175,55,0.75);
+    text-transform: uppercase;
+}
+
+/* ── BOTTOM TEXT ── */
+.bottom-band {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 8;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    opacity: 0;
+    animation: riseIn 1s 1.8s ease forwards;
+}
+.names-text {
+    font-family: 'Italiana', serif;
+    font-size: clamp(1.6rem, 5vw, 3.2rem);
+    line-height: 1;
+    background: linear-gradient(135deg, #F5E17A 0%, #D4AF37 40%, #FFFDE0 55%, #D4AF37 70%, #A07830 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 250%;
+    animation: shimmer 5s ease infinite 2s, riseIn 1s 1.8s ease forwards;
+    filter: drop-shadow(0 0 30px rgba(212,175,55,0.3));
+    white-space: nowrap;
+}
+@keyframes shimmer {
+    0%,100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+}
+.divider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: clamp(120px, 30vw, 260px);
+}
+.div-line  { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+.div-line.r { background: linear-gradient(270deg, transparent, var(--gold)); }
+.div-gem {
+    width: 7px; height: 7px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    animation: gemPulse 2s ease-in-out infinite 2.5s;
+    flex-shrink: 0;
+}
+@keyframes gemPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.6); }
+    50%      { box-shadow: 0 0 0 5px rgba(212,175,55,0); }
+}
+.date-text {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.45rem, 1.4vw, 0.65rem);
+    letter-spacing: 5px;
+    color: rgba(255,248,220,0.6);
+}
+
+/* ── PROGRESS BAR ── */
+.progress-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    z-index: 9;
+    background: rgba(255,255,255,0.06);
+}
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--rose), var(--gold), var(--gold-light));
+    box-shadow: 0 0 12px rgba(212,175,55,0.6);
+    transition: width 0.25s linear;
+}
+
+/* ── SKIP HINT ── */
+.skip-hint {
+    position: absolute;
+    top: 8%;
+    right: 5%;
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s 3s ease forwards;
+    cursor: pointer;
+    padding: 8px 16px;
+    border: 1px solid rgba(212,175,55,0.25);
+    border-radius: 40px;
+    backdrop-filter: blur(8px);
+    background: rgba(212,175,55,0.04);
+    transition: background 0.3s, border-color 0.3s;
+}
+.skip-hint:hover { background: rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.5); }
+.skip-hint span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 4px;
+    color: rgba(212,175,55,0.7);
+    text-transform: uppercase;
+}
+.skip-arrow { color: var(--gold); font-size: 0.7rem; transition: transform 0.3s; }
+.skip-hint:hover .skip-arrow { transform: translateX(3px); }
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ── TAP-TO-PLAY OVERLAY ── */
+.tap-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    background: rgba(7,2,11,0.6);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+.tap-overlay.hidden { opacity: 0; pointer-events: none; }
+.tap-circle {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    animation: tapPulse 2s ease-in-out infinite;
+    position: relative;
+}
+.tap-circle::after {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,175,55,0.3);
+    animation: tapRing 2s ease-out infinite;
+}
+@keyframes tapPulse {
+    0%,100% { transform: scale(1);    box-shadow: 0 0 0   0 rgba(212,175,55,0.4); }
+    50%      { transform: scale(1.05); box-shadow: 0 0 30px 0 rgba(212,175,55,0.2); }
+}
+@keyframes tapRing {
+    0%   { transform: scale(1);    opacity: 0.5; }
+    100% { transform: scale(1.5);  opacity: 0; }
+}
+.play-icon { width: 28px; height: 28px; margin-left: 4px; }
+.tap-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 5px;
+    color: rgba(212,175,55,0.8);
+    text-transform: uppercase;
+}
+
+/* ── PAGE FADE OUT ── */
+body.fade-out .vc {
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+/* ── UTILS ── */
+@keyframes riseIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+/* for elements not centered */
+@keyframes riseInPlain {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+</style>
 </head>
-
 <body>
 
-  <div class="video-container">
+<div class="vc">
 
-    <!-- 🔥 Background Fill -->
+    <!-- Blurred BG -->
     <video class="bg-video" autoplay muted playsinline loop>
-      <source src="Video Project 1.mp4" type="video/mp4">
+        <source src="Video Project 1.mp4" type="video/mp4">
     </video>
 
-    <!-- ✅ Main Video -->
-    <video id="introVideo" class="main-video" autoplay muted playsinline>
-      <source src="Pink Creative Channel Opening and Ending Frame Mobile Video.mp4" type="video/mp4">
+    <!-- Stars -->
+    <canvas id="stars"></canvas>
+
+    <!-- Main Video -->
+    <video id="introVideo" class="main-video" muted playsinline>
+        <source src="Pink Creative Channel Opening and Ending Frame Mobile Video.mp4" type="video/mp4">
     </video>
 
-  </div>
+    <!-- Overlays -->
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="scanline"></div>
 
-  <script>
-    const video = document.getElementById("introVideo");
+    <!-- Mandala -->
+    <div class="mandala-wrap">
+        <svg class="mandala-svg" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="250" cy="250" r="245" stroke="#D4AF37" stroke-width="0.5"/>
+            <circle cx="250" cy="250" r="215" stroke="#D4AF37" stroke-width="0.3"/>
+            <circle cx="250" cy="250" r="185" stroke="#D4AF37" stroke-width="0.5"/>
+            <circle cx="250" cy="250" r="155" stroke="#D4AF37" stroke-width="0.3"/>
+            <circle cx="250" cy="250" r="125" stroke="#D4AF37" stroke-width="0.5"/>
+            <circle cx="250" cy="250" r="95"  stroke="#D4AF37" stroke-width="0.3"/>
+            <circle cx="250" cy="250" r="65"  stroke="#D4AF37" stroke-width="0.5"/>
+            <circle cx="250" cy="250" r="35"  stroke="#D4AF37" stroke-width="0.3"/>
+            <line x1="250" y1="5"   x2="250" y2="495" stroke="#D4AF37" stroke-width="0.3"/>
+            <line x1="5"   y1="250" x2="495" y2="250" stroke="#D4AF37" stroke-width="0.3"/>
+            <line x1="73"  y1="73"  x2="427" y2="427" stroke="#D4AF37" stroke-width="0.25"/>
+            <line x1="427" y1="73"  x2="73"  y2="427" stroke="#D4AF37" stroke-width="0.25"/>
+            <line x1="250" y1="5"   x2="427" y2="73"  stroke="#D4AF37" stroke-width="0.18"/>
+            <line x1="427" y1="73"  x2="495" y2="250" stroke="#D4AF37" stroke-width="0.18"/>
+            <line x1="495" y1="250" x2="427" y2="427" stroke="#D4AF37" stroke-width="0.18"/>
+            <line x1="427" y1="427" x2="250" y2="495" stroke="#D4AF37" stroke-width="0.18"/>
+            <line x1="250" y1="495" x2="73"  y2="427" stroke="#D4AF37" stroke-width="0.18"/>
+            <line x1="73"  y1="427" x2="5"   y2="250" stroke="#D4AF37" stroke-width="0.18"/>
+            <line x1="5"   y1="250" x2="73"  y2="73"  stroke="#D4AF37" stroke-width="0.18"/>
+            <line x1="73"  y1="73"  x2="250" y2="5"   stroke="#D4AF37" stroke-width="0.18"/>
+            <g transform="rotate(0,250,250)">  <ellipse cx="250" cy="118" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.35"/></g>
+            <g transform="rotate(45,250,250)"> <ellipse cx="250" cy="118" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.35"/></g>
+            <g transform="rotate(90,250,250)"> <ellipse cx="250" cy="118" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.35"/></g>
+            <g transform="rotate(135,250,250)"><ellipse cx="250" cy="118" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.35"/></g>
+            <g transform="rotate(180,250,250)"><ellipse cx="250" cy="118" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.35"/></g>
+            <g transform="rotate(225,250,250)"><ellipse cx="250" cy="118" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.35"/></g>
+            <g transform="rotate(270,250,250)"><ellipse cx="250" cy="118" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.35"/></g>
+            <g transform="rotate(315,250,250)"><ellipse cx="250" cy="118" rx="7" ry="14" fill="#D4AF37" fill-opacity="0.35"/></g>
+            <circle cx="250" cy="250" r="9"  fill="#D4AF37" fill-opacity="0.5"/>
+            <circle cx="250" cy="250" r="4"  fill="#D4AF37" fill-opacity="0.9"/>
+        </svg>
+    </div>
 
-    video.play().catch(() => {});
+    <!-- Frame -->
+    <div class="frame-h top"></div>
+    <div class="frame-h bottom"></div>
+    <div class="frame-v left"></div>
+    <div class="frame-v right"></div>
 
-    video.addEventListener("ended", () => {
-      document.body.classList.add("fade-out");
+    <!-- Corner ornaments -->
+    <div class="corners">
+        <div class="corner tl">
+            <svg viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 66 L4 4 L66 4" stroke="#D4AF37" stroke-width="1.2" fill="none"/>
+                <path d="M4 36 L4 4 L36 4" stroke="#D4AF37" stroke-width="0.5" fill="none" opacity="0.45"/>
+                <circle cx="4"  cy="4"  r="3.5" fill="#D4AF37" fill-opacity="0.9"/>
+                <circle cx="66" cy="4"  r="2"   fill="#D4AF37" fill-opacity="0.4"/>
+                <circle cx="4"  cy="66" r="2"   fill="#D4AF37" fill-opacity="0.4"/>
+                <line x1="4" y1="22" x2="16" y2="22" stroke="#D4AF37" stroke-width="0.7" opacity="0.45"/>
+                <line x1="22" y1="4" x2="22" y2="16" stroke="#D4AF37" stroke-width="0.7" opacity="0.45"/>
+                <polygon points="4,4 10,4 4,10" fill="#D4AF37" fill-opacity="0.25"/>
+            </svg>
+        </div>
+        <div class="corner tr">
+            <svg viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 66 L4 4 L66 4" stroke="#D4AF37" stroke-width="1.2" fill="none"/>
+                <path d="M4 36 L4 4 L36 4" stroke="#D4AF37" stroke-width="0.5" fill="none" opacity="0.45"/>
+                <circle cx="4"  cy="4"  r="3.5" fill="#D4AF37" fill-opacity="0.9"/>
+                <circle cx="66" cy="4"  r="2"   fill="#D4AF37" fill-opacity="0.4"/>
+                <circle cx="4"  cy="66" r="2"   fill="#D4AF37" fill-opacity="0.4"/>
+                <line x1="4" y1="22" x2="16" y2="22" stroke="#D4AF37" stroke-width="0.7" opacity="0.45"/>
+                <line x1="22" y1="4" x2="22" y2="16" stroke="#D4AF37" stroke-width="0.7" opacity="0.45"/>
+                <polygon points="4,4 10,4 4,10" fill="#D4AF37" fill-opacity="0.25"/>
+            </svg>
+        </div>
+        <div class="corner bl">
+            <svg viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 66 L4 4 L66 4" stroke="#D4AF37" stroke-width="1.2" fill="none"/>
+                <path d="M4 36 L4 4 L36 4" stroke="#D4AF37" stroke-width="0.5" fill="none" opacity="0.45"/>
+                <circle cx="4"  cy="4"  r="3.5" fill="#D4AF37" fill-opacity="0.9"/>
+                <circle cx="66" cy="4"  r="2"   fill="#D4AF37" fill-opacity="0.4"/>
+                <circle cx="4"  cy="66" r="2"   fill="#D4AF37" fill-opacity="0.4"/>
+                <line x1="4" y1="22" x2="16" y2="22" stroke="#D4AF37" stroke-width="0.7" opacity="0.45"/>
+                <line x1="22" y1="4" x2="22" y2="16" stroke="#D4AF37" stroke-width="0.7" opacity="0.45"/>
+                <polygon points="4,4 10,4 4,10" fill="#D4AF37" fill-opacity="0.25"/>
+            </svg>
+        </div>
+        <div class="corner br">
+            <svg viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 66 L4 4 L66 4" stroke="#D4AF37" stroke-width="1.2" fill="none"/>
+                <path d="M4 36 L4 4 L36 4" stroke="#D4AF37" stroke-width="0.5" fill="none" opacity="0.45"/>
+                <circle cx="4"  cy="4"  r="3.5" fill="#D4AF37" fill-opacity="0.9"/>
+                <circle cx="66" cy="4"  r="2"   fill="#D4AF37" fill-opacity="0.4"/>
+                <circle cx="4"  cy="66" r="2"   fill="#D4AF37" fill-opacity="0.4"/>
+                <line x1="4" y1="22" x2="16" y2="22" stroke="#D4AF37" stroke-width="0.7" opacity="0.45"/>
+                <line x1="22" y1="4" x2="22" y2="16" stroke="#D4AF37" stroke-width="0.7" opacity="0.45"/>
+                <polygon points="4,4 10,4 4,10" fill="#D4AF37" fill-opacity="0.25"/>
+            </svg>
+        </div>
+    </div>
 
-      setTimeout(() => {
-        window.location.href = "about.html";
-      }, 800);
+    <!-- Petals -->
+    <div class="petals" id="petals"></div>
+
+    <!-- Top eyebrow -->
+    <div class="top-text">
+        <span>✦ &nbsp; A Royal Wedding &nbsp; ✦</span>
+    </div>
+
+    <!-- Bottom band -->
+    <div class="bottom-band">
+        <div class="names-text">Vijay &amp; Rashmika</div>
+        <div class="divider-row">
+            <div class="div-line"></div>
+            <div class="div-gem"></div>
+            <div class="div-line r"></div>
+        </div>
+        <div class="date-text">26 · August · 2026 · Udaipur</div>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Skip -->
+    <div class="skip-hint" id="skipBtn">
+        <span>Skip</span>
+        <span class="skip-arrow">›</span>
+    </div>
+
+    <!-- Tap to play overlay -->
+    <div class="tap-overlay" id="tapOverlay">
+        <div class="tap-circle">
+            <svg class="play-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="8,4 24,14 8,24" fill="#D4AF37"/>
+            </svg>
+        </div>
+        <div class="tap-label">Tap to Begin</div>
+    </div>
+
+</div>
+
+<script>
+/* ── STARS ── */
+const cv = document.getElementById('stars');
+const ctx = cv.getContext('2d');
+let W, H, stars = [];
+function resize() {
+    W = cv.width  = window.innerWidth;
+    H = cv.height = window.innerHeight;
+    stars = Array.from({ length: 140 }, () => ({
+        x: Math.random() * W, y: Math.random() * H,
+        r: Math.random() * 1.2 + 0.2,
+        a: Math.random(), sp: Math.random() * 0.004 + 0.001,
+        ph: Math.random() * Math.PI * 2
+    }));
+}
+function drawStars(t) {
+    ctx.clearRect(0, 0, W, H);
+    stars.forEach(s => {
+        const a = (Math.sin(t * s.sp + s.ph) * 0.5 + 0.5) * s.a * 0.85;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(245,225,122,${a})`;
+        ctx.fill();
     });
+    requestAnimationFrame(drawStars);
+}
+resize(); window.addEventListener('resize', resize); drawStars(0);
 
-    document.addEventListener("click", () => {
-      video.play();
-    }, { once: true });
-  </script>
+/* ── PETALS ── */
+const pw = document.getElementById('petals');
+const mob = /Mobi|Android/i.test(navigator.userAgent);
+const PC = mob ? 12 : 26;
+const COLS = ['rgba(255,140,50,0.7)','rgba(210,30,55,0.6)','rgba(255,193,7,0.55)','rgba(212,175,55,0.6)','rgba(201,24,74,0.5)'];
+for (let i = 0; i < PC; i++) {
+    const p = document.createElement('div'); p.className = 'petal';
+    const sz = Math.random() * 10 + 5;
+    p.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;
+        background:${COLS[i%COLS.length]};
+        border-radius:${Math.random()>0.5?'50% 0 50% 0':'30% 70% 60% 40%'};
+        animation-duration:${Math.random()*14+9}s;
+        animation-delay:${Math.random()*14}s;
+        filter:blur(${Math.random()*0.5}px);`;
+    pw.appendChild(p);
+}
 
+/* ── VIDEO LOGIC ── */
+const video   = document.getElementById('introVideo');
+const bar     = document.getElementById('progressBar');
+const tapOv   = document.getElementById('tapOverlay');
+const skipBtn = document.getElementById('skipBtn');
+
+function startVideo() {
+    video.play().then(() => {
+        tapOv.classList.add('hidden');
+    }).catch(() => {});
+}
+
+/* Try autoplay */
+video.play().then(() => {
+    tapOv.classList.add('hidden');
+}).catch(() => {
+    /* Autoplay blocked — show tap overlay */
+});
+
+tapOv.addEventListener('click', startVideo);
+
+/* Progress bar */
+video.addEventListener('timeupdate', () => {
+    if (video.duration) {
+        bar.style.width = (video.currentTime / video.duration * 100) + '%';
+    }
+});
+
+/* On video end → navigate */
+video.addEventListener('ended', () => {
+    document.body.classList.add('fade-out');
+    setTimeout(() => { window.location.href = 'about.html'; }, 1000);
+});
+
+/* Skip button */
+skipBtn.addEventListener('click', () => {
+    bar.style.width = '100%';
+    bar.style.transition = 'none';
+    document.body.classList.add('fade-out');
+    setTimeout(() => { window.location.href = 'about.html'; }, 1000);
+});
+</script>
 </body>
 </html>
